@@ -1,0 +1,953 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     27215,        944]
+NotebookOptionsPosition[     21235,        738]
+NotebookOutlinePosition[     22286,        774]
+CellTagsIndexPosition[     22119,        767]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Functional programming in Wolfram", "Title",
+ CellChangeTimes->{{3.619925857559461*^9, 3.619925860930646*^9}, 
+   3.619929908812454*^9, {3.619930055440028*^9, 3.619930058548787*^9}}],
+
+Cell["A very brief tutorial", "Subtitle",
+ CellChangeTimes->{{3.619925864906461*^9, 3.619925895396102*^9}, {
+  3.619926550281887*^9, 3.6199266031952543`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Preliminaries", "Section",
+ CellChangeTimes->{3.6199259425654287`*^9}],
+
+Cell["\<\
+Functional programming is a programming paradigm that treats computation as \
+the evaluation of mathematical functions and avoids state and mutable data. \
+It emphasizes the application of functions, in contrast with the imperative \
+programming style that emphasizes changes in state.
+\
+\>", "Text",
+ CellChangeTimes->{{3.619925954124461*^9, 3.619925958680707*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["General philosophy: Everything is a function", "Section",
+ CellChangeTimes->{{3.619925998086347*^9, 3.619926001620755*^9}}],
+
+Cell["Some simple examples:", "Text",
+ CellChangeTimes->{{3.619926764158389*^9, 3.619926778013726*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "y", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"y", "=", 
+  RowBox[{"Sqrt", "[", "4", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.619926640454609*^9, 3.619926653662188*^9}}],
+
+Cell[BoxData["2"], "Output",
+ CellChangeTimes->{3.619926655414857*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "z", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"z", "=", 
+  RowBox[{"Sqrt", "[", "x", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.619926697619022*^9, 3.6199267092905207`*^9}}],
+
+Cell[BoxData[
+ SqrtBox["x"]], "Output",
+ CellChangeTimes->{3.619926712401256*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Clear", "[", "z", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.6199267263423843`*^9, 3.6199267303878403`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["z"], "Input",
+ CellChangeTimes->{3.6199267343441067`*^9}],
+
+Cell[BoxData["z"], "Output",
+ CellChangeTimes->{3.619926734794509*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"??", "Sqrt"}]], "Input",
+ CellChangeTimes->{{3.619926741298785*^9, 3.6199267412998943`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox["\<\"\\!\\(\\*RowBox[{\\\"Sqrt\\\", \\\"[\\\", StyleBox[\\\"z\\\", \
+\\\"TI\\\"], \\\"]\\\"}]\\) or \\!\\(\\*SqrtBox[StyleBox[\\\"z\\\", \
+\\\"TI\\\"]]\\) gives the square root of \\!\\(\\*StyleBox[\\\"z\\\", \
+\\\"TI\\\"]\\). \"\>", "MSG"], "\[NonBreakingSpace]", 
+  ButtonBox[
+   StyleBox["\[RightSkeleton]", "SR"],
+   Active->True,
+   BaseStyle->"Link",
+   ButtonData->"paclet:ref/Sqrt"]}]], "Print", "PrintUsage",
+ CellChangeTimes->{3.619926742430895*^9},
+ CellTags->"Info3619955542-9774677"],
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {
+     RowBox[{
+      RowBox[{"Attributes", "[", "Sqrt", "]"}], "=", 
+      RowBox[{"{", 
+       RowBox[{"Listable", ",", "NumericFunction", ",", "Protected"}], "}"}]}]}
+   },
+   BaselinePosition->{Baseline, {1, 1}},
+   GridBoxAlignment->{
+    "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+     "RowsIndexed" -> {}}],
+  Definition[Sqrt],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.619926742457168*^9},
+ CellTags->"Info3619955542-9774677"]
+}, Open  ]]
+}, Open  ]],
+
+Cell["Function composition", "Text",
+ CellChangeTimes->{{3.619926834016034*^9, 3.619926840519195*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Sqrt", "[", 
+  RowBox[{"Sqrt", "[", "16", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.61992684302507*^9, 3.61992684908857*^9}}],
+
+Cell[BoxData["2"], "Output",
+ CellChangeTimes->{3.619926850354866*^9}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["User-defined functions", "Section",
+ CellChangeTimes->{{3.6199268877701807`*^9, 3.619926894401585*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Pure functions ", "Subsubsection",
+ CellChangeTimes->{{3.619926910282391*^9, 3.619926960496072*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Function", "[", 
+  RowBox[{"z", ",", 
+   RowBox[{"z", "^", "2"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.619926910282391*^9, 3.619926960492484*^9}, {
+  3.6199269943343163`*^9, 3.619927003943741*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Function", "[", 
+  RowBox[{"z", ",", 
+   SuperscriptBox["z", "2"]}], "]"}]], "Output",
+ CellChangeTimes->{3.6199270059173517`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"??", "Function"}]], "Input",
+ CellChangeTimes->{{3.619927008741928*^9, 3.619927010807468*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox["\<\"\\!\\(\\*RowBox[{\\\"Function\\\", \\\"[\\\", \
+StyleBox[\\\"body\\\", \\\"TI\\\"], \\\"]\\\"}]\\) or \
+\\!\\(\\*RowBox[{StyleBox[\\\"body\\\", \\\"TI\\\"], \\\"&\\\"}]\\) is a pure \
+function. The formal parameters are # (or #1), #2, etc. \
+\\n\\!\\(\\*RowBox[{\\\"Function\\\", \\\"[\\\", RowBox[{StyleBox[\\\"x\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"body\\\", \\\"TI\\\"]}], \\\"]\\\"}]\\) \
+is a pure function with a single formal parameter \
+\\!\\(\\*StyleBox[\\\"x\\\", \\\"TI\\\"]\\). \\n\\!\\(\\*RowBox[{\\\"Function\
+\\\", \\\"[\\\", RowBox[{RowBox[{\\\"{\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"x\\\", \\\"TI\\\"], StyleBox[\\\"1\\\", \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"x\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]], \\\",\\\", StyleBox[\\\"\[Ellipsis]\\\", \\\
+\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", StyleBox[\\\"body\\\", \\\"TI\\\"]}], \\\
+\"]\\\"}]\\) is a pure function with a list of formal parameters. \"\>", 
+   "MSG"], "\[NonBreakingSpace]", 
+  ButtonBox[
+   StyleBox["\[RightSkeleton]", "SR"],
+   Active->True,
+   BaseStyle->"Link",
+   ButtonData->"paclet:ref/Function"]}]], "Print", "PrintUsage",
+ CellChangeTimes->{3.6199270113971252`*^9},
+ CellTags->"Info3619955811-9774677"],
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {
+     RowBox[{
+      RowBox[{"Attributes", "[", "Function", "]"}], "=", 
+      RowBox[{"{", 
+       RowBox[{"HoldAll", ",", "Protected"}], "}"}]}]}
+   },
+   BaselinePosition->{Baseline, {1, 1}},
+   GridBoxAlignment->{
+    "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+     "RowsIndexed" -> {}}],
+  Definition[Function],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.619927011417962*^9},
+ CellTags->"Info3619955811-9774677"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Function", "[", 
+   RowBox[{"z", ",", 
+    RowBox[{"z", "^", "2"}]}], "]"}], "[", "5", "]"}]], "Input",
+ CellChangeTimes->{{3.619927021851349*^9, 3.619927028464404*^9}}],
+
+Cell[BoxData["25"], "Output",
+ CellChangeTimes->{3.619927029068274*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"#1", "^", "2"}], "&"}], ")"}], "[", "5", "]"}]], "Input",
+ CellChangeTimes->{{3.619927032614936*^9, 3.6199270414967813`*^9}}],
+
+Cell[BoxData["25"], "Output",
+ CellChangeTimes->{3.619927042910796*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"??", "#"}]], "Input",
+ CellChangeTimes->{{3.619927045688738*^9, 3.619927047561447*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox["\<\"# represents the first argument supplied to a pure function. \
+\\n\\!\\(\\*StyleBox[RowBox[{\\\"#\\\", StyleBox[\\\"n\\\", \\\"TI\\\"]}]]\\) \
+represents the \\!\\(\\*StyleBox[RowBox[{StyleBox[\\\"n\\\", \\\"TI\\\"], \
+\\\"\[Null]\\\"}]]\\)\\!\\(\\*SuperscriptBox[\\\"\[Null]\\\", \\\"th\\\"]\\) \
+argument. \\n\\!\\(\\*StyleBox[RowBox[{\\\"#\\\", StyleBox[\\\"name\\\", \
+\\\"TI\\\"]}]]\\) represents the value associated with key \
+\\\"\\!\\(\\*\\nStyleBox[\\\"name\\\", \\\"TI\\\"]\\)\\\" in an association \
+in the first argument. \"\>", "MSG"], "\[NonBreakingSpace]", 
+  ButtonBox[
+   StyleBox["\[RightSkeleton]", "SR"],
+   Active->True,
+   BaseStyle->"Link",
+   ButtonData->"paclet:ref/Slot"]}]], "Print", "PrintUsage",
+ CellChangeTimes->{3.619927048457616*^9},
+ CellTags->"Info3619955848-9774677"],
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {
+     RowBox[{
+      RowBox[{"Attributes", "[", "Slot", "]"}], "=", 
+      RowBox[{"{", 
+       RowBox[{"NHoldAll", ",", "Protected"}], "}"}]}]}
+   },
+   BaselinePosition->{Baseline, {1, 1}},
+   GridBoxAlignment->{
+    "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+     "RowsIndexed" -> {}}],
+  Definition[Slot],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{3.619927048475823*^9, 3.6199281825401278`*^9},
+ CellTags->"Info3619955848-9774677"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Defining complex functions", "Subsubsection",
+ CellChangeTimes->{{3.6199271062602873`*^9, 3.619927111933035*^9}, {
+  3.619927159157241*^9, 3.6199271639172287`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"compFunc", "[", "x_", "]"}], " ", ":=", 
+  RowBox[{"Sqrt", "[", 
+   RowBox[{"Sqrt", "[", "x", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6199271796148977`*^9, 3.619927196623601*^9}, {
+  3.619927265563038*^9, 3.619927267230747*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"compFunc", "[", "16", "]"}]], "Input",
+ CellChangeTimes->{{3.619927150348659*^9, 3.619927156588148*^9}, {
+  3.619927244914919*^9, 3.6199272577621183`*^9}}],
+
+Cell[BoxData["2"], "Output",
+ CellChangeTimes->{{3.61992725914485*^9, 3.619927275335061*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Functional programming?", "Section",
+ CellChangeTimes->{{3.619927210850163*^9, 3.61992721259587*^9}, 
+   3.6199280407128143`*^9, {3.619928164092791*^9, 3.6199281852994413`*^9}, {
+   3.619928984707692*^9, 3.619928986786169*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Key features", "Subsubsection",
+ CellChangeTimes->{{3.61992819946876*^9, 3.6199282024447536`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Programs as functions from inputs to outputs", "Item",
+ CellChangeTimes->{{3.619928056481456*^9, 3.619928063157895*^9}}],
+
+Cell["Higher-order functions", "Item",
+ CellChangeTimes->{{3.619928056481456*^9, 3.619928066183234*^9}}],
+
+Cell["Functions become a sort of datatype", "Subitem",
+ CellChangeTimes->{{3.619928056481456*^9, 3.6199280999041967`*^9}}],
+
+Cell["Avoids mutability/state (!!!!)", "Item",
+ CellChangeTimes->{{3.619928122419816*^9, 3.619928125081284*^9}}],
+
+Cell["\<\
+Mathematical by construction (category theory, formal computation)\
+\>", "Item",
+ CellChangeTimes->{{3.619928122419816*^9, 3.619928151853422*^9}}],
+
+Cell["\[OpenCurlyDoubleQuote]What things are vs. what things do.\
+\[CloseCurlyDoubleQuote]", "Item",
+ CellChangeTimes->{{3.619928122419816*^9, 3.619928160670993*^9}}],
+
+Cell["Lots of list manipulation", "Item",
+ CellChangeTimes->{{3.619928122419816*^9, 3.619928161350278*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Pure functions", "Subsubsection",
+ CellChangeTimes->{{3.6199281451120777`*^9, 3.6199281471235247`*^9}, {
+  3.61992824371327*^9, 3.619928255911463*^9}}],
+
+Cell["No side-effects: functons depent only on inputs", "Text",
+ CellChangeTimes->{{3.61992827387311*^9, 3.619928296498098*^9}}],
+
+Cell[BoxData[
+ RowBox[{"f", " ", "=", " ", 
+  RowBox[{"Function", "[", 
+   RowBox[{"x", ",", 
+    RowBox[{"x", "+", "3"}]}], "]"}]}]], "Code",
+ CellChangeTimes->{{3.619928304268427*^9, 3.6199283185077333`*^9}}],
+
+Cell["Alternatively,", "Text",
+ CellChangeTimes->{{3.619928323418977*^9, 3.619928328154985*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"g", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"#", " ", "+", " ", "3"}], "&"}]}], ";"}]], "Code",
+ CellChangeTimes->{{3.619928331260037*^9, 3.619928342796653*^9}}],
+
+Cell["Multiple arguments:", "Text",
+ CellChangeTimes->{{3.61992836163231*^9, 3.619928366126878*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"h", "=", 
+   RowBox[{
+    RowBox[{"#1", "+", 
+     RowBox[{"2", "*", "#2"}]}], "&"}]}], ";"}], "\n", 
+ RowBox[{"h", "[", 
+  RowBox[{"3", ",", "4"}], "]"}]}], "Code",
+ CellChangeTimes->{{3.619928406523118*^9, 3.619928424778049*^9}}],
+
+Cell[BoxData["11"], "Output",
+ CellChangeTimes->{3.6199284259042253`*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Use ",
+ StyleBox["Block", "Code"],
+ ", ",
+ StyleBox["With", "Code"],
+ ", or ",
+ StyleBox["Module", "Code"],
+ " to localize variables in more complicated function structures."
+}], "Text",
+ CellChangeTimes->{{3.6199284411960783`*^9, 3.619928475051882*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Transforming Data", "Subsubsection",
+ CellChangeTimes->{3.619928517282021*^9}],
+
+Cell["\<\
+Consider applying a simple (pure!) function to a set of data. . .\
+\>", "Text",
+ CellChangeTimes->{{3.6199285323536577`*^9, 3.619928542607114*^9}}],
+
+Cell[TextData[{
+ "...naively, with a ",
+ StyleBox["For", "Code"],
+ " loop:"
+}], "Item",
+ CellChangeTimes->{{3.6199285534075203`*^9, 3.619928566192213*^9}, {
+  3.619928788762946*^9, 3.619928795690528*^9}}],
+
+Cell[BoxData[
+ RowBox[{"For", "[", 
+  RowBox[{
+   RowBox[{"i", "+=", "1"}], ",", 
+   RowBox[{"i", "<", 
+    RowBox[{"Length", "[", "input", "]"}]}], ",", 
+   RowBox[{"i", "++"}], ",", "\n", "\t", 
+   RowBox[{
+    RowBox[{"output", "[", 
+     RowBox[{"[", "i", "]"}], "]"}], "=", 
+    RowBox[{"Sin", "[", 
+     RowBox[{"input", "[", 
+      RowBox[{"[", "i", "]"}], "]"}], "]"}]}], ","}], "]"}]], "Code",
+ CellChangeTimes->{{3.6199285699525623`*^9, 3.619928656772881*^9}}],
+
+Cell[TextData[{
+ "...with a ",
+ StyleBox["Table", "Code"],
+ StyleBox[" command:", "Text"]
+}], "Item",
+ CellChangeTimes->{{3.619928768937602*^9, 3.619928825925294*^9}}],
+
+Cell[BoxData[
+ RowBox[{"output", " ", "=", " ", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"Sin", "[", 
+     RowBox[{"input", "[", 
+      RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "1", ",", "n"}], "}"}]}], "]"}]}]], "Code",
+ CellChangeTimes->{{3.619928836654933*^9, 3.619928837287842*^9}}],
+
+Cell["(like a list comprehension in python!)", "Text",
+ CellChangeTimes->{{3.619928844661118*^9, 3.6199288690535507`*^9}}],
+
+Cell[TextData[{
+ "...iwth a ",
+ StyleBox["Map", "Code"],
+ ":"
+}], "Item",
+ CellChangeTimes->{{3.619928878413912*^9, 3.6199288889378653`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"output", " ", "=", " ", 
+  RowBox[{"Map", "[", 
+   RowBox[{"Sin", ",", " ", "input"}], "]"}]}]], "Code",
+ CellChangeTimes->{{3.619928878413912*^9, 3.61992889965981*^9}}],
+
+Cell[TextData[{
+ ". . . by cheating with the ",
+ StyleBox["Listable", "Code"],
+ " attribute:"
+}], "Item",
+ CellChangeTimes->{3.61992891305051*^9}],
+
+Cell[BoxData[
+ RowBox[{"output", " ", "=", " ", 
+  RowBox[{"Sin", "[", "input", "]"}]}]], "Code",
+ CellChangeTimes->{3.619928927861093*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Higher-order function: ",
+ StyleBox["Map", "Code"]
+}], "Subsubsection",
+ CellChangeTimes->{{3.61992900836609*^9, 3.619929020614416*^9}}],
+
+Cell[TextData[{
+ StyleBox["Map", "Code"],
+ " applies a function to each element of a collection without modifying the \
+original."
+}], "Text",
+ CellChangeTimes->{{3.6199290360070047`*^9, 3.619929045154697*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Map", "[", 
+  RowBox[{"f", ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "3", ",", "x", ",", "y", ",", "z"}], "}"}]}], 
+  "]"}]], "Code",
+ CellChangeTimes->{3.619929074340742*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"f", "[", "1", "]"}], ",", 
+   RowBox[{"f", "[", "2", "]"}], ",", 
+   RowBox[{"f", "[", "3", "]"}], ",", 
+   RowBox[{"f", "[", "x", "]"}], ",", 
+   RowBox[{"f", "[", "2", "]"}], ",", 
+   RowBox[{"f", "[", "z", "]"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.619929075471077*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Automatically handles length", "Item",
+ CellChangeTimes->{{3.619929098958427*^9, 3.6199290999665117`*^9}}],
+
+Cell[TextData[{
+ "Easily parallelized with ",
+ StyleBox["ParallelMap", "Code"]
+}], "Item",
+ CellChangeTimes->{{3.619929098958427*^9, 3.619929117070033*^9}}],
+
+Cell["Common enough to warrant special syntax:", "Item",
+ CellChangeTimes->{{3.619929098958427*^9, 3.6199291178940268`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"f", "/@", 
+  RowBox[{"{", 
+   RowBox[{"1", ",", "2", ",", "3", ",", "x", ",", "y", ",", "z"}], 
+   "}"}]}]], "Code",
+ CellChangeTimes->{3.6199291289204597`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"f", "[", "1", "]"}], ",", 
+   RowBox[{"f", "[", "2", "]"}], ",", 
+   RowBox[{"f", "[", "3", "]"}], ",", 
+   RowBox[{"f", "[", "x", "]"}], ",", 
+   RowBox[{"f", "[", "2", "]"}], ",", 
+   RowBox[{"f", "[", "z", "]"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.61992912992146*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Higher-order function: ",
+ StyleBox["Apply", "Code"]
+}], "Subsubsection",
+ CellChangeTimes->{{3.619929152063547*^9, 3.6199291908425627`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Apply", "Code"],
+ " turns a list of things into formal arguments of a function\[LongDash]it \
+essentially \[OpenCurlyDoubleQuote]strips off\[CloseCurlyDoubleQuote] a set \
+of {}."
+}], "Text",
+ CellChangeTimes->{3.6199292194733973`*^9}],
+
+Cell[TextData[{
+ "Similar to ",
+ StyleBox["Map", "Code"],
+ ", transforms a list:"
+}], "Item",
+ CellChangeTimes->{3.619929241465057*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Apply", "[", 
+  RowBox[{"f", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", " ", "2", ",", " ", "3", ",", " ", "a", ",", " ", "b", ",", " ",
+      "c"}], "}"}]}], "]"}]], "Code",
+ CellChangeTimes->{3.619929254892026*^9}],
+
+Cell[BoxData[
+ RowBox[{"f", "[", 
+  RowBox[{"1", ",", "2", ",", "3", ",", "1", ",", "b", ",", "c"}], 
+  "]"}]], "Output",
+ CellChangeTimes->{3.619929261356398*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Can operate on levels (default = 0, use ",
+ StyleBox["@@@", "Code"],
+ " for level 1)"
+}], "Item",
+ CellChangeTimes->{{3.61992932699312*^9, 3.619929331063416*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Apply", "[", 
+  RowBox[{"f", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "1", "}"}], ",", 
+     RowBox[{"{", "2", "}"}], ",", 
+     RowBox[{"{", "3", "}"}]}], "}"}], ",", " ", 
+   RowBox[{"{", "1", "}"}]}], "]"}]], "Code",
+ CellChangeTimes->{3.619929349019806*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"f", "[", "1", "]"}], ",", 
+   RowBox[{"f", "[", "2", "]"}], ",", 
+   RowBox[{"f", "[", "3", "]"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.619929350325403*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["Plus", "Code"],
+ " & ",
+ StyleBox["Subtract", "Code"],
+ " become really useful wtih ",
+ StyleBox["Apply", "Code"]
+}], "Item",
+ CellChangeTimes->{3.6199293709389277`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Higher-order functions: ",
+ StyleBox["Nest", "Code"],
+ " & ",
+ StyleBox["NestList", "Code"]
+}], "Subsubsection",
+ CellChangeTimes->{3.619929454781377*^9}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Nest", "Code"],
+ " repeatedly applies a function to an expression"
+}], "Item",
+ CellChangeTimes->{{3.6199294831758823`*^9, 3.619929498348442*^9}}],
+
+Cell[TextData[{
+ StyleBox["NestList", "Code"],
+ " does the same, producing a list of the intermediate results"
+}], "Item",
+ CellChangeTimes->{{3.6199294831758823`*^9, 3.619929503323907*^9}}]
+}, Open  ]],
+
+Cell["Captures iteration as a recursive application of functions", "Text",
+ CellChangeTimes->{3.6199295318178263`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Nest", "[", 
+  RowBox[{"f", ",", " ", "x", ",", " ", "3"}], "]"}]], "Code",
+ CellChangeTimes->{3.6199295581438293`*^9}],
+
+Cell[BoxData[
+ RowBox[{"f", "[", 
+  RowBox[{"f", "[", 
+   RowBox[{"f", "[", "x", "]"}], "]"}], "]"}]], "Output",
+ CellChangeTimes->{3.619929559638096*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"NestList", "[", 
+  RowBox[{"f", ",", " ", "x", ",", " ", "3"}], "]"}]], "Code",
+ CellChangeTimes->{{3.619929562167863*^9, 3.619929573932292*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"x", ",", 
+   RowBox[{"f", "[", "x", "]"}], ",", 
+   RowBox[{"f", "[", 
+    RowBox[{"f", "[", "x", "]"}], "]"}], ",", 
+   RowBox[{"f", "[", 
+    RowBox[{"f", "[", 
+     RowBox[{"f", "[", "x", "]"}], "]"}], "]"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.619929576311409*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[TextData[{
+ "Conlcusion\n",
+ StyleBox["While ", "Text"],
+ StyleBox["Map", "Code"],
+ StyleBox[", ", "Text"],
+ StyleBox["Apply", "Code"],
+ StyleBox[", & ", "Text"],
+ StyleBox["Nest", "Code"],
+ StyleBox[" are all built-in functions, none rely on ideas exclusive to \
+Mathematica; as functional constructs, they very naturally capture specific \
+types of problems & ideas.", "Text"]
+}], "Subsubsection",
+ CellChangeTimes->{{3.6199296047607517`*^9, 3.619929616652343*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 583},
+WindowMargins->{{Automatic, 132}, {Automatic, 11}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info3619955542-9774677"->{
+  Cell[2860, 102, 531, 12, 49, "Print",
+   CellTags->"Info3619955542-9774677"],
+  Cell[3394, 116, 519, 15, 22, "Print",
+   CellTags->"Info3619955542-9774677"]},
+ "Info3619955811-9774677"->{
+  Cell[5169, 184, 1269, 23, 74, "Print",
+   CellTags->"Info3619955811-9774677"],
+  Cell[6441, 209, 502, 15, 22, "Print",
+   CellTags->"Info3619955811-9774677"]},
+ "Info3619955848-9774677"->{
+  Cell[7744, 262, 844, 16, 78, "Print",
+   CellTags->"Info3619955848-9774677"],
+  Cell[8591, 280, 569, 17, 22, "Print",
+   CellTags->"Info3619955848-9774677"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info3619955542-9774677", 21554, 749},
+ {"Info3619955811-9774677", 21744, 754},
+ {"Info3619955848-9774677", 21935, 759}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 188, 2, 92, "Title"],
+Cell[771, 26, 158, 2, 51, "Subtitle"],
+Cell[CellGroupData[{
+Cell[954, 32, 76, 1, 64, "Section"],
+Cell[1033, 35, 376, 7, 87, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1446, 47, 129, 1, 64, "Section"],
+Cell[1578, 50, 103, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1706, 55, 225, 5, 46, "Input"],
+Cell[1934, 62, 70, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2041, 68, 227, 5, 46, "Input"],
+Cell[2271, 75, 81, 2, 33, "Output"]
+}, Open  ]],
+Cell[2367, 80, 146, 3, 28, "Input"],
+Cell[CellGroupData[{
+Cell[2538, 87, 71, 1, 28, "Input"],
+Cell[2612, 90, 70, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2719, 96, 116, 2, 28, "Input"],
+Cell[CellGroupData[{
+Cell[2860, 102, 531, 12, 49, "Print",
+ CellTags->"Info3619955542-9774677"],
+Cell[3394, 116, 519, 15, 22, "Print",
+ CellTags->"Info3619955542-9774677"]
+}, Open  ]]
+}, Open  ]],
+Cell[3940, 135, 102, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[4067, 140, 153, 3, 28, "Input"],
+Cell[4223, 145, 70, 1, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[4342, 152, 109, 1, 50, "Section"],
+Cell[CellGroupData[{
+Cell[4476, 157, 106, 1, 35, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[4607, 162, 225, 5, 28, "Input"],
+Cell[4835, 169, 154, 4, 34, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5026, 178, 118, 2, 28, "Input"],
+Cell[CellGroupData[{
+Cell[5169, 184, 1269, 23, 74, "Print",
+ CellTags->"Info3619955811-9774677"],
+Cell[6441, 209, 502, 15, 22, "Print",
+ CellTags->"Info3619955811-9774677"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6992, 230, 204, 5, 28, "Input"],
+Cell[7199, 237, 71, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7307, 243, 190, 5, 28, "Input"],
+Cell[7500, 250, 71, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7608, 256, 111, 2, 28, "Input"],
+Cell[CellGroupData[{
+Cell[7744, 262, 844, 16, 78, "Print",
+ CellTags->"Info3619955848-9774677"],
+Cell[8591, 280, 569, 17, 22, "Print",
+ CellTags->"Info3619955848-9774677"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9221, 304, 170, 2, 35, "Subsubsection"],
+Cell[9394, 308, 271, 6, 28, "Input"],
+Cell[CellGroupData[{
+Cell[9690, 318, 179, 3, 28, "Input"],
+Cell[9872, 323, 93, 1, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10026, 331, 233, 3, 64, "Section"],
+Cell[CellGroupData[{
+Cell[10284, 338, 104, 1, 35, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[10413, 343, 126, 1, 28, "Item"],
+Cell[10542, 346, 104, 1, 28, "Item"],
+Cell[10649, 349, 122, 1, 26, "Subitem"],
+Cell[10774, 352, 112, 1, 28, "Item"],
+Cell[10889, 355, 156, 3, 28, "Item"],
+Cell[11048, 360, 166, 2, 28, "Item"],
+Cell[11217, 364, 107, 1, 28, "Item"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11373, 371, 157, 2, 35, "Subsubsection"],
+Cell[11533, 375, 128, 1, 30, "Text"],
+Cell[11664, 378, 210, 5, 49, "Code"],
+Cell[11877, 385, 96, 1, 30, "Text"],
+Cell[11976, 388, 196, 5, 50, "Code"],
+Cell[12175, 395, 100, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[12300, 400, 267, 8, 65, "Code"],
+Cell[12570, 410, 73, 1, 28, "Output"]
+}, Open  ]],
+Cell[12658, 414, 272, 9, 30, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12967, 428, 84, 1, 35, "Subsubsection"],
+Cell[13054, 431, 157, 3, 30, "Text"],
+Cell[13214, 436, 204, 6, 28, "Item"],
+Cell[13421, 444, 470, 13, 66, "Code"],
+Cell[13894, 459, 167, 5, 28, "Item"],
+Cell[14064, 466, 345, 9, 50, "Code"],
+Cell[14412, 477, 122, 1, 30, "Text"],
+Cell[14537, 480, 141, 5, 28, "Item"],
+Cell[14681, 487, 193, 4, 50, "Code"],
+Cell[14877, 493, 146, 5, 28, "Item"],
+Cell[15026, 500, 139, 3, 50, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15202, 508, 154, 4, 35, "Subsubsection"],
+Cell[15359, 514, 210, 5, 30, "Text"],
+Cell[CellGroupData[{
+Cell[15594, 523, 212, 6, 50, "Code"],
+Cell[15809, 531, 329, 9, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16175, 545, 112, 1, 28, "Item"],
+Cell[16290, 548, 156, 4, 28, "Item"],
+Cell[16449, 554, 124, 1, 28, "Item"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16610, 560, 184, 5, 50, "Code"],
+Cell[16797, 567, 328, 9, 28, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17174, 582, 159, 4, 35, "Subsubsection"],
+Cell[17336, 588, 262, 6, 30, "Text"],
+Cell[17601, 596, 135, 5, 28, "Item"],
+Cell[CellGroupData[{
+Cell[17761, 605, 252, 7, 50, "Code"],
+Cell[18016, 614, 163, 4, 28, "Output"]
+}, Open  ]],
+Cell[18194, 621, 180, 5, 28, "Item"],
+Cell[CellGroupData[{
+Cell[18399, 630, 303, 9, 50, "Code"],
+Cell[18705, 641, 212, 6, 28, "Output"]
+}, Open  ]],
+Cell[18932, 650, 196, 7, 28, "Item"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19165, 662, 172, 6, 35, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[19362, 672, 173, 4, 28, "Item"],
+Cell[19538, 678, 190, 4, 28, "Item"]
+}, Open  ]],
+Cell[19743, 685, 118, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[19886, 690, 143, 3, 49, "Code"],
+Cell[20032, 695, 154, 4, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20223, 704, 169, 3, 49, "Code"],
+Cell[20395, 709, 313, 9, 28, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[20735, 722, 472, 12, 80, "Subsubsection"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

@@ -1,0 +1,394 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     10682,        385]
+NotebookOptionsPosition[      8569,        305]
+NotebookOutlinePosition[      8924,        321]
+CellTagsIndexPosition[      8881,        318]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Patterns, Rules, and Attributes", "Title",
+ CellChangeTimes->{{3.619931278827701*^9, 3.6199312884753017`*^9}, {
+  3.6199321531502438`*^9, 3.619932163036948*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["What are patterns?", "Section",
+ CellChangeTimes->{
+  3.619931432126335*^9, {3.61993146870164*^9, 3.619931527471243*^9}, {
+   3.6199320741453047`*^9, 3.6199320773857193`*^9}}],
+
+Cell[TextData[{
+ "\nPatterns represent classes of expressions which can be used to \
+\[OpenCurlyDoubleQuote]automatically\[CloseCurlyDoubleQuote] simplify or \
+restructure expressions. For example, ",
+ StyleBox["f[_]", "Code"],
+ " and f",
+ StyleBox["[x_]", "Code"],
+ " both represent the pattern of \[OpenCurlyDoubleQuote]a function named ",
+ StyleBox["f", "Code"],
+ " with anything as its argument\[CloseCurlyDoubleQuote], but",
+ StyleBox[" f[x_] ", "Code"],
+ "gives the name ",
+ StyleBox["x", "Code"],
+ " to the argument (whatever it is)."
+}], "Text",
+ CellChangeTimes->{
+  3.619931456535384*^9, {3.619931554593527*^9, 3.61993156059309*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Common patterns:", "Subsubsection",
+ CellChangeTimes->{{3.619932672271277*^9, 3.61993269997488*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["x_", "Code"],
+ ": anything (with \[OpenCurlyDoubleQuote]the \
+anything\[CloseCurlyDoubleQuote] given the name ",
+ StyleBox["x", "Code"],
+ ")"
+}], "Item",
+ CellChangeTimes->{{3.619931651567267*^9, 3.619931663262714*^9}}],
+
+Cell[TextData[{
+ StyleBox["x_Integer", "Code"],
+ ": any integer (given the name ",
+ StyleBox["x", "Code"],
+ ")"
+}], "Item",
+ CellChangeTimes->{{3.619931651567267*^9, 3.619931692528921*^9}}],
+
+Cell[TextData[{
+ StyleBox["x_\:02c6n_", "Code"],
+ ": anything to any explicit power (guess their names)"
+}], "Item",
+ CellChangeTimes->{{3.619931651567267*^9, 3.6199317152019587`*^9}}],
+
+Cell[TextData[{
+ StyleBox["f[r_,r_]", "Code"],
+ ": a function with two identical arguments"
+}], "Item",
+ CellChangeTimes->{{3.619931651567267*^9, 3.619931726276278*^9}}],
+
+Cell["and so on", "Item",
+ CellChangeTimes->{{3.619931651567267*^9, 3.61993172808707*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Pattern matchng functions:", "Subsubsection",
+ CellChangeTimes->{{3.619932690159333*^9, 3.619932713823874*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Cases", "Code"],
+ " \[LongDash] a list of elements matching a pattern"
+}], "Item",
+ CellChangeTimes->{{3.61993273746033*^9, 3.61993275340711*^9}}],
+
+Cell[TextData[{
+ StyleBox["Position", "Code"],
+ " \[LongDash] positions of elements matching a pattern"
+}], "Item",
+ CellChangeTimes->{{3.61993273746033*^9, 3.619932767055366*^9}}],
+
+Cell[TextData[{
+ StyleBox["Count", "Code"],
+ " \[LongDash] a count of occurrences of a pattern"
+}], "Item",
+ CellChangeTimes->{{3.61993273746033*^9, 3.619932767602386*^9}, {
+  3.6199327978108*^9, 3.619932797818089*^9}}],
+
+Cell[TextData[{
+ StyleBox["Set", "Code"],
+ " (",
+ StyleBox["=", "Code"],
+ "), ",
+ StyleBox["SetDelayed", "Code"],
+ " (",
+ StyleBox[":=", "Code"],
+ ") \[LongDash] define transformations for patterns"
+}], "Item",
+ CellChangeTimes->{{3.61993273746033*^9, 3.619932767602386*^9}, {
+  3.6199327978108*^9, 3.6199328263876553`*^9}}],
+
+Cell[TextData[{
+ StyleBox["MemberQ", "Code"],
+ " \[LongDash] test if any member of a list matches a pattern\n"
+}], "Item",
+ CellChangeTimes->{{3.61993273746033*^9, 3.619932767602386*^9}, {
+  3.6199327978108*^9, 3.619932827302258*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["What are Rules?", "Section",
+ CellChangeTimes->{{3.61993206113265*^9, 3.619932067593038*^9}, 
+   3.6199323013022013`*^9}],
+
+Cell["\<\
+Everything that the Wolfram Language does can be thought of as derived from \
+its ability to apply general transformation rules to arbitrary symbolic \
+expressions. The Wolfram Language provides flexible functions that give \
+direct access to the Wolfram Language\[CloseCurlyQuote]s powerful rule \
+transformation engine.
+\
+\>", "Text",
+ CellChangeTimes->{3.619932089647531*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Representing rules", "Subsubsection",
+ CellChangeTimes->{{3.619932294120002*^9, 3.619932310137884*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Rule", "Code"],
+ " (",
+ StyleBox["->", "Code"],
+ ") \[LongDash] immediate replacement rule for any pattern"
+}], "Item",
+ CellChangeTimes->{{3.619932355919277*^9, 3.619932358266283*^9}}],
+
+Cell[TextData[{
+ StyleBox["RuleDelayed", "Code"],
+ " (",
+ StyleBox[":>", "Code"],
+ ") \[LongDash] delayed rule, with right-hand side evaluated only when used\n\
+"
+}], "Item",
+ CellChangeTimes->{{3.619932355919277*^9, 3.619932365881785*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Applying rules", "Subsubsection",
+ CellChangeTimes->{{3.619932413890217*^9, 3.6199324173465967`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["ReplaceAll", "Code"],
+ " (",
+ StyleBox["/.", "Code"],
+ ") \[LongDash] apply replacement rules throughout an expression"
+}], "Item",
+ CellChangeTimes->{
+  3.619932431703367*^9, {3.6199324778411703`*^9, 3.619932477848318*^9}}],
+
+Cell[TextData[{
+ StyleBox["ReplaceRepeated", "Code"],
+ " (",
+ StyleBox["//.", "Code"],
+ ") \[LongDash] apply replacement rules repeatedly until no change occurs\n"
+}], "Item",
+ CellChangeTimes->{
+  3.619932431703367*^9, {3.6199324778411703`*^9, 3.619932478682012*^9}}]
+}, Open  ]],
+
+Cell[TextData[StyleBox["Some other rules", "Subsubsection"]], "Text",
+ CellChangeTimes->{
+  3.6199323221041193`*^9, 3.6199323540784082`*^9, {3.619932504841642*^9, 
+   3.619932520345516*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Replace", "Code"],
+ " \[LongDash] apply replacement rules to a complete expression"
+}], "Item",
+ CellChangeTimes->{{3.6199325355192137`*^9, 3.619932548488864*^9}}],
+
+Cell[TextData[{
+ StyleBox["ReplaceList", "Code"],
+ " \[LongDash] a list of all possible ways to apply rules"
+}], "Item",
+ CellChangeTimes->{{3.6199325355192137`*^9, 3.6199325632491617`*^9}}],
+
+Cell[TextData[{
+ StyleBox["SparseArray", "Code"],
+ " \[LongDash] give rules for values at particular positions in an array"
+}], "Item",
+ CellChangeTimes->{{3.6199325355192137`*^9, 3.619932563910799*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Attributes", "Section",
+ CellChangeTimes->{{3.619932950555987*^9, 3.619932961728516*^9}}],
+
+Cell["\<\
+Attributes let you define general properties of functions, without \
+necessarily giving explicit values.\
+\>", "Text",
+ CellChangeTimes->{3.619932974044107*^9}],
+
+Cell[TextData[{
+ "The ",
+ StyleBox["Listable", "Code"],
+ " attribute automatically threads a function over lists that appear as \
+arguments."
+}], "Item",
+ CellChangeTimes->{3.619932991956867*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"SetAttributes", "[", 
+  RowBox[{"f", ",", "Listable"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"f", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "3"}], "}"}], ",", "x"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.619933009065873*^9, 3.6199330228777447`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"f", "[", 
+    RowBox[{"1", ",", "x"}], "]"}], ",", 
+   RowBox[{"f", "[", 
+    RowBox[{"2", ",", "x"}], "]"}], ",", 
+   RowBox[{"f", "[", 
+    RowBox[{"3", ",", "x"}], "]"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.6199330239361153`*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["Flat", "Code"],
+ ", ",
+ StyleBox["Orderless", "Code"],
+ " used to define things like associativity and commutativity (",
+ StyleBox["a+b == b+a", "Code"],
+ " for the purposes of pattern matching)"
+}], "Item",
+ CellChangeTimes->{{3.6199330633571672`*^9, 3.6199330758417463`*^9}}],
+
+Cell["", "Text"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Free copy and cut some containts form website", "Title",
+ CellChangeTimes->{{3.620297772478451*^9, 3.620297791966181*^9}}],
+
+Cell["http : // www.mai.liu.se/~halun/CAS/mathematica.html", "Text",
+ CellChangeTimes->{{3.620297811813035*^9, 3.620297824347292*^9}}],
+
+Cell["", "Text",
+ CellChangeTimes->{3.620297797654543*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 583},
+WindowMargins->{{Automatic, 177}, {Automatic, 14}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 167, 2, 92, "Title"],
+Cell[CellGroupData[{
+Cell[772, 28, 181, 3, 64, "Section"],
+Cell[956, 33, 643, 16, 87, "Text"],
+Cell[CellGroupData[{
+Cell[1624, 53, 106, 1, 35, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[1755, 58, 246, 7, 28, "Item"],
+Cell[2004, 67, 189, 6, 28, "Item"],
+Cell[2196, 75, 184, 4, 28, "Item"],
+Cell[2383, 81, 169, 4, 28, "Item"],
+Cell[2555, 87, 90, 1, 28, "Item"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2694, 94, 117, 1, 35, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[2836, 99, 173, 4, 28, "Item"],
+Cell[3012, 105, 180, 4, 28, "Item"],
+Cell[3195, 111, 219, 5, 28, "Item"],
+Cell[3417, 118, 324, 11, 28, "Item"],
+Cell[3744, 131, 234, 5, 45, "Item"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4039, 143, 127, 2, 64, "Section"],
+Cell[4169, 147, 388, 8, 87, "Text"],
+Cell[CellGroupData[{
+Cell[4582, 159, 109, 1, 35, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[4716, 164, 212, 6, 28, "Item"],
+Cell[4931, 172, 240, 7, 45, "Item"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5220, 185, 107, 1, 35, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[5352, 190, 251, 7, 28, "Item"],
+Cell[5606, 199, 268, 7, 45, "Item"]
+}, Open  ]],
+Cell[5889, 209, 190, 3, 37, "Text"],
+Cell[CellGroupData[{
+Cell[6104, 216, 190, 4, 28, "Item"],
+Cell[6297, 222, 190, 4, 28, "Item"],
+Cell[6490, 228, 203, 4, 28, "Item"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6754, 239, 95, 1, 64, "Section"],
+Cell[6852, 242, 170, 4, 30, "Text"],
+Cell[7025, 248, 195, 6, 28, "Item"],
+Cell[CellGroupData[{
+Cell[7245, 258, 303, 7, 46, "Input"],
+Cell[7551, 267, 289, 9, 28, "Output"]
+}, Open  ]],
+Cell[7855, 279, 304, 8, 45, "Item"],
+Cell[8162, 289, 16, 0, 30, "Text"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8227, 295, 128, 1, 148, "Title"],
+Cell[8358, 298, 134, 1, 30, "Text"],
+Cell[8495, 301, 58, 1, 30, "Text"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

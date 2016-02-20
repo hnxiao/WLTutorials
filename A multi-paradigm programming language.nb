@@ -1,0 +1,456 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     17326,        447]
+NotebookOptionsPosition[     15720,        389]
+NotebookOutlinePosition[     16074,        405]
+CellTagsIndexPosition[     16031,        402]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ StyleBox["Wolfram Language",
+  FontSlant->"Italic"],
+ ": a multi-paradigm programming language"
+}], "Title",
+ CellChangeTimes->{{3.6199178485170317`*^9, 3.6199178542978687`*^9}, {
+  3.619919134022138*^9, 3.619919154660774*^9}, {3.6199210067307663`*^9, 
+  3.619921012176959*^9}, {3.61992144154499*^9, 3.6199214422870693`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Programming paradigm\n",
+ StyleBox["wiki", "Text"]
+}], "Section",
+ CellChangeTimes->{{3.6199193660100203`*^9, 3.619919377809363*^9}, {
+  3.619921022476482*^9, 3.6199210237219133`*^9}}],
+
+Cell[TextData[{
+ "A ",
+ ButtonBox["programming paradigm",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://en.wikipedia.org/wiki/Programming_paradigm"], None},
+  ButtonNote->"http://en.wikipedia.org/wiki/Programming_paradigm"],
+ " is a fundamental style of computer programming, a way of building the \
+structure and elements of computer programs. Capabilities and styles of \
+various programming languages are defined by their supported programming \
+paradigms; some programming languages are designed to follow only one \
+paradigm, while others support multiple paradigms."
+}], "Text",
+ CellChangeTimes->{{3.619919398664342*^9, 3.619919419291339*^9}}],
+
+Cell[TextData[{
+ "Programming paradigms that are often distinguished include ",
+ ButtonBox["imperative",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://en.wikipedia.org/wiki/Imperative_programming"], None},
+  ButtonNote->"http://en.wikipedia.org/wiki/Imperative_programming"],
+ ", ",
+ ButtonBox["declarative",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://en.wikipedia.org/wiki/Declarative_programming"], None},
+  ButtonNote->"http://en.wikipedia.org/wiki/Declarative_programming"],
+ ", ",
+ ButtonBox["functional",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://en.wikipedia.org/wiki/Functional_programming"], None},
+  ButtonNote->"http://en.wikipedia.org/wiki/Functional_programming"],
+ ", ",
+ ButtonBox["object - oriented",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://en.wikipedia.org/wiki/Object-oriented_programming"], None},
+  ButtonNote->"http://en.wikipedia.org/wiki/Object-oriented_programming"],
+ ", ",
+ ButtonBox["logic,",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://en.wikipedia.org/wiki/Logic_programming"], None},
+  ButtonNote->"http://en.wikipedia.org/wiki/Logic_programming"],
+ " ",
+ ButtonBox["symbolic",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://en.wikipedia.org/wiki/Symbolic_programming"], None},
+  ButtonNote->"http://en.wikipedia.org/wiki/Symbolic_programming"],
+ " programming and etc."
+}], "Text",
+ CellChangeTimes->{{3.6199194759262743`*^9, 3.6199196161648703`*^9}, {
+  3.619919659714912*^9, 3.6199196612817173`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "A multi-paradigm programming language\n",
+ StyleBox["wiki", "Text"]
+}], "Section",
+ CellChangeTimes->{{3.619920117024765*^9, 3.6199201548592453`*^9}, {
+   3.619921458645939*^9, 3.6199214606300097`*^9}, 3.619923770629451*^9}],
+
+Cell["\<\
+Wolfram language supports multiple programming paradigms. It is optimized for \
+symbolic programming, but supports procedural, functional and even object \
+oriented programming.\
+\>", "Text",
+ CellChangeTimes->{
+  3.619920196722139*^9, {3.6199205212046213`*^9, 3.619920577028984*^9}, {
+   3.619920609663597*^9, 3.619920652240831*^9}, {3.61992097173726*^9, 
+   3.619920979592095*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Procedural Programming\n",
+ StyleBox["cited from ", "Text"],
+ StyleBox[ButtonBox["here",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://spot.colorado.edu/~sitelic/mmm/funcproc.html"], None},
+  ButtonNote->"http://spot.colorado.edu/~sitelic/mmm/funcproc.html"], "Text"]
+}], "Section",
+ CellChangeTimes->{
+  3.619920865438241*^9, {3.619920895814146*^9, 3.619920918651081*^9}}],
+
+Cell["\<\
+The traditional programming languages, which students usually learn first, \
+are procedural languages. These include C, Go, Fortran, Pascal, and Basic.\
+\>", "Text",
+ CellChangeTimes->{
+  3.6199208931377163`*^9, 3.619920934446107*^9, {3.6199239803228703`*^9, 
+   3.6199239820014563`*^9}}],
+
+Cell["\<\
+A procedural program is written as a list of instructions, telling the \
+computer, step-by-step, what to do: Open a file, read a number, multiply by \
+4, display something. Program units include the main or program block, \
+subroutines, functions, procedures; file scoping; includes/modules; libraries.\
+\>", "Text",
+ CellChangeTimes->{3.619920946244475*^9}],
+
+Cell["\<\
+Procedural programming is fine for small projects. It is the most natural way \
+to tell a computer what to do, and the computer processor\[CloseCurlyQuote]s \
+own language, machine code, is procedural, so the translation of the \
+procedural high-level language into machine code is straightforward and \
+efficient. What is more, procedural programming has a built-in way of \
+splitting big lists of instructions into smaller lists: the function.\
+\>", "Text",
+ CellChangeTimes->{3.619921080225127*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Functional Programming\n",
+ StyleBox["cited from ", "Text"],
+ StyleBox[ButtonBox["here",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://spot.colorado.edu/~sitelic/mmm/funcproc.html"], None},
+  ButtonNote->"http://spot.colorado.edu/~sitelic/mmm/funcproc.html"], "Text"]
+}], "Section",
+ CellChangeTimes->{{3.619921147418997*^9, 3.6199211684723167`*^9}}],
+
+Cell["\<\
+Functional programming languages emphasize rules and pattern-matching. While \
+they appear non-intuitive to those who have only experienced procedural \
+languages, they provide succinct and natural programming structures for those \
+who gain some experience. Functional programming is particularly useful for \
+mathematical work, where the notion of ``function\[CloseCurlyQuote]\
+\[CloseCurlyQuote] is already a well established concept.\
+\>", "Text",
+ CellChangeTimes->{{3.619921179685302*^9, 3.61992118152209*^9}}],
+
+Cell["\<\
+It was true that functional programs generally ran more slowly than \
+procedural programs. However, runtime is not the whole story in terms of \
+efficiency. The time it takes to develop code, and even more importantly, to \
+modify programs, is substantially faster for functional programs than for \
+procedural programs. This is important for protyping and carrying out \
+exploratory research. Furthermore, for machine-precision calculations on \
+lists and matrices and tensors -- the backbone of industrail-strength number \
+crunching! -- the gap between the speeds of Matlab and Maple and Mathematica \
+have been programmed away. Mathematica uses packed array technology to give \
+the twin benefits of increased speed (the speed of large matrix calculations \
+can gain an order of magnitude!) and increased capacity, since larger \
+matrices can be packed into available memory.\
+\>", "Text",
+ CellChangeTimes->{3.619923408330277*^9}],
+
+Cell["\<\
+An additional factor that needs to be taken into account when evaluating the \
+efficiency of a language for computer simulation work is related to what \
+computing tasks are going to be carried out. Most simulation studies include \
+not only creating and running a program but also analyzing the results both \
+visually and numerically (as well as writing up the study both for \
+publication and presentation). There is a major benefit to using a computer \
+algebra system such as Mathematica, Maple, Macsyma, or Axiom which provides a \
+unified computing environment for carrying out all of these tasks.\
+\>", "Text",
+ CellChangeTimes->{
+  3.6199234293909483`*^9, {3.6199234802048798`*^9, 3.6199235067059107`*^9}}],
+
+Cell[TextData[{
+ StyleBox["\[OpenCurlyDoubleQuote]Wolfram\[CloseCurlyQuote]s functional \
+programming constructs, ", "Item"],
+ StyleBox["Map[ ]", "Code"],
+ StyleBox[" and ", "Item"],
+ StyleBox["Apply[ ]", "Code"],
+ StyleBox[" allow you to do many things in one line that would normally take \
+several loops in other languages. Remember, \[OpenCurlyDoubleQuote]if you \
+aren\[CloseCurlyQuote]t programming functionally, you\[CloseCurlyQuote]re \
+programming dysfunctionally!\[CloseCurlyDoubleQuote] When you add ", "Item"],
+ StyleBox["Fold[ ]", "Code"],
+ StyleBox[" and", "Item"],
+ StyleBox[" Nest[ ]", "Code"],
+ StyleBox[" into the mix, you can do some pretty powerful things in a couple \
+of lines...\[CloseCurlyQuote]\[CloseCurlyQuote]", "Item"]
+}], "ItemParagraph",
+ CellChangeTimes->{{3.61992351008115*^9, 3.619923512698181*^9}, {
+  3.619923561164246*^9, 3.619923591827772*^9}, {3.6199236321554947`*^9, 
+  3.619923635883499*^9}, {3.619923670511435*^9, 3.6199236846400843`*^9}, {
+  3.6199237157480164`*^9, 3.619923742985861*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Symbolic Programming", "Section",
+ CellChangeTimes->{{3.6199214832322807`*^9, 3.619921492030854*^9}}],
+
+Cell["\<\
+To make the explanation more intuitive, we can think of Wolfram\
+\[CloseCurlyQuote]s symbolic programming as a search-and-replace system where \
+you program by specifying search-and-replace rules. Wolfram programs are \
+basically just sets of replacement rules. Execution is a process of applying \
+existing rules to input until no rule matches. \
+\>", "Text",
+ CellChangeTimes->{{3.619921515419932*^9, 3.61992159260565*^9}, {
+  3.619921777380609*^9, 3.6199217880486794`*^9}, {3.61992238965767*^9, 
+  3.6199223933269777`*^9}}],
+
+Cell["\<\
+Wolfram language is, in essence, a functional programming language that is \
+implemented as a term rewriting system with very extensive pattern-matching \
+capabilities; one can program in Wolfram using the procedural style of \
+programming (e.g., using Do loops) but it is definitely preferable to adopt \
+the functional or rule-based style. \
+\>", "Text",
+ CellChangeTimes->{3.6199217608300543`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Procedural vs. Functional", "Section",
+ CellChangeTimes->{{3.619920762004809*^9, 3.61992080387572*^9}}],
+
+Cell["\<\
+\[OpenCurlyDoubleQuote]Functional programming is like describing your problem \
+to a mathematician. Imperative programming is like giving instructions to an \
+idiot.\[CloseCurlyDoubleQuote]\
+\>", "Text",
+ CellChangeTimes->{3.619924370467516*^9}],
+
+Cell["\<\
+A procedural programming language is one where programs are organized into \
+blocks of code called variously \[OpenCurlyDoubleQuote]subroutines\
+\[CloseCurlyDoubleQuote], \[OpenCurlyDoubleQuote]functions\
+\[CloseCurlyDoubleQuote], or \[OpenCurlyDoubleQuote]procedures\
+\[CloseCurlyDoubleQuote], each of which handles one particular task. The main \
+function of the program (often actually called \[OpenCurlyDoubleQuote]main\
+\[CloseCurlyDoubleQuote]) then makes a series of calls to these procedures in \
+order to archive its goal.\
+\>", "Text",
+ CellChangeTimes->{3.619924162145731*^9}],
+
+Cell[TextData[{
+ "Some explanations from ",
+ ButtonBox["stackoverflow",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://stackoverflow.com/questions/5226055/truly-understanding-the-\
+difference-between-procedural-and-functional"], None},
+  ButtonNote->
+   "http://stackoverflow.com/questions/5226055/truly-understanding-the-\
+difference-between-procedural-and-functional"],
+ "\nA functional language (ideally) allows you to write a mathematical \
+function, i.e. a function that takes n arguments and returns a value. If the \
+program is executed, this function is evaluated.\nA procedural language, on \
+the other hand, performs a series of sequential steps, where the functional \
+program would be nested. There\[CloseCurlyQuote]s a way of transforming \
+sequential logic into functional logic called continuation passing style.\nAs \
+a consequence, a purely functional program always yields the same value for \
+an input, and the order of evaluation is not well-defined; which means that \
+uncertain values like user input or random values are hard to model in purely \
+functional languages."
+}], "Text",
+ CellChangeTimes->{{3.619924464507168*^9, 3.619924510933552*^9}}],
+
+Cell[TextData[{
+ "More explanatins from ",
+ ButtonBox["stackoverflow",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://stackoverflow.com/questions/5226055/truly-understanding-the-\
+difference-between-procedural-and-functional"], None},
+  ButtonNote->
+   "http://stackoverflow.com/questions/5226055/truly-understanding-the-\
+difference-between-procedural-and-functional"]
+}], "Text",
+ CellChangeTimes->{{3.619924572725665*^9, 3.619924594052718*^9}}],
+
+Cell[TextData[{
+ "When you use ",
+ StyleBox["For", "Code"],
+ ", ",
+ StyleBox["Do", "Code"],
+ ", ",
+ StyleBox["While", "Code"],
+ " and etc in your Wolfram languge a lot, you may not know how to program in \
+Wolfram efficiently."
+}], "Text",
+ CellChangeTimes->{{3.6199253871425447`*^9, 3.6199254619295807`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Functional vs. Symbolic\n",
+ StyleBox["cited ", "Text"],
+ StyleBox[ButtonBox["here",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://stackoverflow.com/a/4435720/4018099"], None},
+  ButtonNote->"http://stackoverflow.com/a/4435720/4018099"], "Text"]
+}], "Section",
+ CellChangeTimes->{
+  3.619924854209805*^9, {3.6199248881849203`*^9, 3.619924902803914*^9}}],
+
+Cell["\<\
+One could view symbolic programming as an answer to the question: \
+\[OpenCurlyDoubleQuote]What would happen if I tried to model everything using \
+only expression transformations?\[CloseCurlyDoubleQuote] Functional \
+programming, by contrast, can been seen as an answer to: \
+\[OpenCurlyDoubleQuote]What would happen if I tried to model everything using \
+only functions?\[CloseCurlyDoubleQuote] Just like symbolic programming, \
+functional programming makes it easy to quickly build up layers of \
+abstractions. The example I gave here could be easily be reproduced in, say, \
+Haskell using a functional reactive animation approach. Functional \
+programming is all about function composition, higher level functions, \
+combinators -- all the nifty things that you can do with functions.\
+\>", "Text",
+ CellChangeTimes->{{3.619924932690916*^9, 3.619924945242672*^9}}],
+
+Cell["\<\
+Wolfram is clearly optimized for symbolic programming. It is possible to \
+write code in functional style, but the functional features in Wolfram are \
+really just a thin veneer over transformations (and a leaky abstraction at \
+that, see the footnote below).\
+\>", "Text",
+ CellChangeTimes->{{3.619924948315318*^9, 3.619924994031474*^9}}],
+
+Cell["\<\
+Haskell is clearly optimized for functional programming. It is possible to \
+write code in symbolic style, but I would quibble that the syntactic \
+representation of programs and data are quite distinct, making the experience \
+suboptimal.\
+\>", "Text",
+ CellChangeTimes->{3.619924955819276*^9}],
+
+Cell["\<\
+In conclusion, I advocate that there is a distinction between functional \
+programming (as epitomized by Haskell) and symbolic programming (as \
+epitomized by Mathematica). I think that if one studies both, then one will \
+learn substantially more than studying just one -- the ultimate test of \
+distinctness.
+\
+\>", "Text",
+ CellChangeTimes->{3.619925034431089*^9}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 583},
+WindowMargins->{{233, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 342, 7, 148, "Title"],
+Cell[CellGroupData[{
+Cell[947, 33, 202, 5, 83, "Section"],
+Cell[1152, 40, 662, 13, 87, "Text"],
+Cell[1817, 55, 1519, 40, 49, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3373, 100, 242, 5, 83, "Section"],
+Cell[3618, 107, 393, 8, 49, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4048, 120, 403, 10, 83, "Section"],
+Cell[4454, 132, 298, 6, 49, "Text"],
+Cell[4755, 140, 368, 6, 68, "Text"],
+Cell[5126, 148, 511, 8, 87, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5674, 161, 380, 9, 83, "Section"],
+Cell[6057, 172, 526, 8, 87, "Text"],
+Cell[6586, 182, 945, 14, 163, "Text"],
+Cell[7534, 198, 725, 11, 125, "Text"],
+Cell[8262, 211, 1032, 19, 72, "ItemParagraph"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9331, 235, 107, 1, 64, "Section"],
+Cell[9441, 238, 536, 9, 68, "Text"],
+Cell[9980, 249, 410, 7, 87, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10427, 261, 109, 1, 64, "Section"],
+Cell[10539, 264, 255, 5, 49, "Text"],
+Cell[10797, 271, 597, 10, 87, "Text"],
+Cell[11397, 283, 1181, 21, 182, "Text"],
+Cell[12581, 306, 458, 11, 30, "Text"],
+Cell[13042, 319, 309, 10, 49, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13388, 334, 383, 10, 83, "Section"],
+Cell[13774, 346, 878, 13, 144, "Text"],
+Cell[14655, 361, 349, 6, 68, "Text"],
+Cell[15007, 369, 305, 6, 68, "Text"],
+Cell[15315, 377, 377, 8, 87, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

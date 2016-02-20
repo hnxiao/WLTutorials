@@ -1,0 +1,364 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     12097,        354]
+NotebookOptionsPosition[     10870,        312]
+NotebookOutlinePosition[     11223,        328]
+CellTagsIndexPosition[     11180,        325]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Mathematica: what is symbolic programming?", "Title",
+ CellChangeTimes->{3.6199124319277277`*^9}],
+
+Cell["An unconvoluted no-horn-blowing plain explanation", "Subtitle",
+ CellChangeTimes->{{3.6199125046822*^9, 3.619912509188211*^9}, {
+  3.61991285874439*^9, 3.619912861118433*^9}}],
+
+Cell[TextData[{
+ "Some interesting explanations cited from ",
+ ButtonBox["Stack Exchange",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://stackoverflow.com/questions/4430998/mathematica-what-is-\
+symbolic-programming"], None},
+  ButtonNote->
+   "http://stackoverflow.com/questions/4430998/mathematica-what-is-symbolic-\
+programming"],
+ " "
+}], "Subsubtitle",
+ CellChangeTimes->{{3.6199125711031227`*^9, 3.619912591350402*^9}, {
+  3.6199127080612288`*^9, 3.619912708062337*^9}}],
+
+Cell[TextData[{
+ "General philosophy: \n",
+ StyleBox["Think of ", "Subsection"],
+ StyleBox["Mathematica", "Subsection",
+  FontSlant->"Italic"],
+ StyleBox["\[CloseCurlyQuote]s symbolic programming as a search-and-replace \
+system where you program by specifying search-and-replace rules.", 
+  "Subsection"]
+}], "Section",
+ CellChangeTimes->{{3.6199129501821127`*^9, 3.619912952569178*^9}, {
+  3.6199141313869762`*^9, 3.619914188659758*^9}, {3.619914274790456*^9, 
+  3.619914312784005*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Some demonstrations:", "Section",
+ CellChangeTimes->{{3.61991605478864*^9, 3.6199160858900623`*^9}, 
+   3.6199161765594177`*^9, {3.6199162368445663`*^9, 3.619916238431655*^9}}],
+
+Cell["For instance you could specify the following rule", "Text",
+ CellChangeTimes->{{3.6199145806793213`*^9, 3.619914617106161*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"area", " ", ":=", " ", 
+   RowBox[{"Pi", "*", 
+    RowBox[{"radius", "^", "2"}]}]}], ";"}]], "Code",
+ CellChangeTimes->{{3.619914621873114*^9, 3.619914652300275*^9}, 
+   3.619915605138452*^9}],
+
+Cell[TextData[{
+ "Next time you use ",
+ StyleBox["area", "Code"],
+ ", it'll be replaced with ",
+ StyleBox["Pi*radius^2.", "Code"],
+ " Now, suppose you define new rule"
+}], "Text",
+ CellChangeTimes->{{3.61991469882631*^9, 3.6199147282846813`*^9}, 
+   3.619916188444724*^9}],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"radius", ":=", "5"}], "Code"]], "Code",
+ CellChangeTimes->{{3.619914757653523*^9, 3.619914775841926*^9}}],
+
+Cell[TextData[{
+ "Now, whenever you use ",
+ StyleBox["radius", "Code"],
+ ", it\[CloseCurlyQuote]ll get rewritten into ",
+ StyleBox["5", "Code"],
+ ". If you evaluate ",
+ StyleBox["area", "Code"],
+ " it\[CloseCurlyQuote]ll get rewritten into ",
+ StyleBox["Pi*radius^2", "Code"],
+ " which triggers rewriting rule for ",
+ StyleBox["radius", "Code"],
+ " and you\[CloseCurlyQuote]ll get ",
+ StyleBox["Pi*5^2", "Code"],
+ " as an intermediate result. This new form will trigger a built-in rewriting \
+rule for ",
+ StyleBox["^", "Code"],
+ " operation so the expression will get further rewritten into ",
+ StyleBox["Pi*25.", "Code"],
+ " At this point rewriting stops because there are no applicable rules. "
+}], "Text",
+ CellChangeTimes->{
+  3.6199147808209*^9, {3.619914812306945*^9, 3.619914817895576*^9}, 
+   3.619914939185224*^9}],
+
+Cell["\<\
+You can emulate functional programming by using your replacement rules as \
+function.For instance, if you want to define a function that adds, you could \
+do\
+\>", "Text",
+ CellChangeTimes->{{3.619914959188758*^9, 3.619914974844119*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"add", "[", 
+   RowBox[{"a_", ",", "b_"}], "]"}], ":=", 
+  RowBox[{"a", "+", "b"}]}]], "Code",
+ CellChangeTimes->{
+  3.6199144328620663`*^9, {3.619914494976841*^9, 3.619914509160262*^9}, 
+   3.6199145713629503`*^9, 3.619914610866556*^9, 3.619914641696587*^9, 
+   3.619914703671*^9, {3.619914749895074*^9, 3.61991477374619*^9}, {
+   3.619914995814307*^9, 3.619915016329153*^9}}],
+
+Cell[TextData[{
+ "Now ",
+ StyleBox["add[x, y]", "Code"],
+ " gets rewritten into ",
+ StyleBox["x + y", "Code"],
+ ".If you want ",
+ StyleBox["add", "Code"],
+ " to only apply for numeric ",
+ StyleBox["a", "Code"],
+ " and ",
+ StyleBox["b", "Code"],
+ ", you could instead do"
+}], "Text",
+ CellChangeTimes->{{3.6199150506812468`*^9, 3.619915065177018*^9}, 
+   3.619915149792911*^9, {3.619915181242221*^9, 3.619915187920928*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"add", "[", 
+   RowBox[{
+    RowBox[{"a_", "?", "NumericQ"}], ",", 
+    RowBox[{"b_", "?", "NumericQ"}]}], "]"}], ":=", 
+  RowBox[{"a", "+", "b"}]}]], "Code",
+ CellChangeTimes->{{3.6199151524827557`*^9, 3.619915155388877*^9}}],
+
+Cell[TextData[{
+ "Now, ",
+ StyleBox["add[2, 3]", "Code"],
+ " gets rewritten into ",
+ StyleBox["2 + 3", "Code"],
+ " using your rule and then into ",
+ StyleBox["5", "Code"],
+ " using built-in rule for ",
+ StyleBox["+", "Code"],
+ ", whereas ",
+ StyleBox["add[test1, test2]", "Code"],
+ " remains unchanged."
+}], "Text",
+ CellChangeTimes->{{3.6199152059208612`*^9, 3.619915210387945*^9}, {
+  3.619915245810774*^9, 3.619915246618904*^9}}],
+
+Cell["Here' s an example of an interactive replacement rule", "Text",
+ CellChangeTimes->{{3.619915277291692*^9, 3.619915280063352*^9}}],
+
+Cell[BoxData[{
+ RowBox[{"a", ":=", 
+  RowBox[{"ChoiceDialog", "[", 
+   RowBox[{"\"\<Pick one\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "2", ",", "3", ",", "4"}], "}"}]}], "]"}]}], "\n", 
+ RowBox[{"a", "+", "1"}]}], "Code",
+ CellChangeTimes->{{3.619915300043084*^9, 3.619915300044217*^9}, {
+  3.619915455701968*^9, 3.619915457636973*^9}, {3.6199155913325653`*^9, 
+  3.619915636292695*^9}}],
+
+Cell[TextData[{
+ "Here, ",
+ StyleBox["a", "Code"],
+ " gets replaced with ",
+ StyleBox["ChoiceDialog", "Code"],
+ ", which then gets replaced with the number the user chose on the dialog \
+that popped up, which makes both quantities numeric and triggers replacement \
+rule for ",
+ StyleBox["+", "Code"],
+ " .Here, ",
+ StyleBox["ChoiceDialog", "Code"],
+ " as a built - in replacement rule along the lines of \"replace \
+ChoiceDialog[some stuff] with the value of button the user clicked\"."
+}], "Text",
+ CellChangeTimes->{{3.619915460923411*^9, 3.619915464127779*^9}}],
+
+Cell[TextData[{
+ "Rules can be defined using conditions which themselves need to go through \
+rule - rewriting in order to produce ",
+ StyleBox["True", "Code"],
+ " or ",
+ StyleBox["False", "Code"],
+ ". For instance suppose you invented a new equation solving method, but you \
+think it only works when the final result of your method is positive.You \
+could do the following rule"
+}], "Text",
+ CellChangeTimes->{{3.6199155441499443`*^9, 3.6199155600648108`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"solve", "[", 
+   RowBox[{
+    RowBox[{"x", "+", "5"}], "\[Equal]", "b_"}], "]"}], ":=", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"result", "=", 
+     RowBox[{"b", "-", "5"}]}], ";", 
+    RowBox[{"result", "/;", 
+     RowBox[{"result", ">", "0"}]}]}], ")"}]}]], "Code",
+ CellChangeTimes->{{3.619915654010104*^9, 3.619915660325757*^9}}],
+
+Cell[TextData[{
+ "Here, ",
+ StyleBox["solve[x + 5 == 20]", "Code"],
+ " gets replaced with ",
+ StyleBox["15", "Code"],
+ ", but ",
+ StyleBox["solve[x + 5 == -20]", "Code"],
+ " is unchanged because there' s no rule that applies.The condition that \
+prevents this rule from applying is ",
+ StyleBox["/; result > 0.", "Code"],
+ " Evaluator essentially looks the potential output of rule application to \
+decide whether to go ahead with it."
+}], "Text",
+ CellChangeTimes->{{3.619915673499956*^9, 3.619915676023406*^9}}],
+
+Cell[BoxData[{
+ RowBox[{"myrules", "=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"area", "\[Rule]", 
+     RowBox[{"Pi", " ", 
+      RowBox[{"radius", "^", "2"}]}]}], ",", 
+    RowBox[{"radius", "\[Rule]", "5"}]}], "}"}]}], "\n", 
+ RowBox[{"area", "//.", "myrules"}]}], "Code",
+ CellChangeTimes->{{3.619915743441332*^9, 3.61991574344241*^9}}],
+
+Cell[TextData[{
+ "This will apply rules defined in ",
+ StyleBox["myrules", "Code"],
+ " until result stops changing.This is pretty similar to the default \
+evaluator, but now you could have several sets of rules and apply them \
+selectively.A more advanced ",
+ ButtonBox["example",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://library.wolfram.com/infocenter/Articles/898/"], None},
+  ButtonNote->"http://library.wolfram.com/infocenter/Articles/898/"],
+ " shows how to make a Prolog - like evaluator that searches over sequences \
+of rule applications."
+}], "Text",
+ CellChangeTimes->{{3.6199157608765078`*^9, 3.61991576517505*^9}, {
+  3.6199158303558083`*^9, 3.6199158303567123`*^9}}],
+
+Cell[TextData[{
+ "One drawback of current Mathematica version comes up when you need to use \
+Mathematica' s default evaluator (to make use of ",
+ StyleBox["Integrate", "Code"],
+ ", ",
+ StyleBox["Solve", "Code"],
+ ", etc) and want to change default sequence of evaluation.That is possible \
+but ",
+ ButtonBox["complicated",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://library.wolfram.com/infocenter/Conferences"], None},
+  ButtonNote->"http://library.wolfram.com/infocenter/Conferences"],
+ ", and I like to think that some future implementation of symbolic \
+programming will have a more elegant way of controlling evaluation sequence"
+}], "Text",
+ CellChangeTimes->{{3.619915843533902*^9, 3.6199158455146437`*^9}, {
+  3.619915894257099*^9, 3.619915894258143*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Conludions\n",
+ StyleBox["Mathematica programs are basically just sets of replacement rules. \
+Execution is a process of applying existing rules to input until no rule \
+matches.  Or in other words, ", "Subsection"],
+ StyleBox["Mathematica", "Subsection",
+  FontSlant->"Italic"],
+ StyleBox[" is a system based on term rewriting. The language provides \
+special syntax for various forms of rewriting, special support for rules and \
+strategies. The paradigm is not that \[OpenCurlyDoubleQuote]new\
+\[CloseCurlyDoubleQuote] and of course it\[CloseCurlyQuote]s not unique, but \
+they\[CloseCurlyQuote]re definitely on a bleeding edge of this \
+\[OpenCurlyDoubleQuote]symbolic programming\[CloseCurlyDoubleQuote] thing, \
+alongside with the other strong players such as Haskell or Pure.", 
+  "Subsection"]
+}], "Section",
+ CellChangeTimes->{{3.6199162867827663`*^9, 3.619916306535575*^9}, {
+  3.619916379820896*^9, 3.619916405541605*^9}, {3.6199165883224173`*^9, 
+  3.619916624138958*^9}, {3.619916661469249*^9, 3.619916707845209*^9}, {
+  3.619916773375944*^9, 3.6199167890756063`*^9}}]
+}, Open  ]]
+},
+WindowSize->{808, 586},
+WindowMargins->{{35, Automatic}, {Automatic, 3}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 103, 1, 148, "Title"],
+Cell[686, 25, 181, 2, 51, "Subtitle"],
+Cell[870, 29, 488, 13, 29, "Subsubtitle"],
+Cell[1361, 44, 488, 11, 116, "Section"],
+Cell[CellGroupData[{
+Cell[1874, 59, 182, 2, 50, "Section"],
+Cell[2059, 63, 133, 1, 30, "Text"],
+Cell[2195, 66, 227, 6, 49, "Code"],
+Cell[2425, 74, 272, 8, 30, "Text"],
+Cell[2700, 84, 141, 3, 49, "Code"],
+Cell[2844, 89, 824, 22, 87, "Text"],
+Cell[3671, 113, 247, 5, 49, "Text"],
+Cell[3921, 120, 411, 9, 50, "Code"],
+Cell[4335, 131, 422, 14, 30, "Text"],
+Cell[4760, 147, 260, 7, 50, "Code"],
+Cell[5023, 156, 432, 14, 49, "Text"],
+Cell[5458, 172, 135, 1, 30, "Text"],
+Cell[5596, 175, 399, 9, 66, "Code"],
+Cell[5998, 186, 565, 14, 87, "Text"],
+Cell[6566, 202, 462, 10, 68, "Text"],
+Cell[7031, 214, 369, 11, 50, "Code"],
+Cell[7403, 227, 513, 13, 68, "Text"],
+Cell[7919, 242, 341, 9, 66, "Code"],
+Cell[8263, 253, 696, 15, 68, "Text"],
+Cell[8962, 270, 778, 17, 87, "Text"]
+}, Open  ]],
+Cell[9755, 290, 1099, 19, 220, "Section"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

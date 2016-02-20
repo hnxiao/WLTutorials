@@ -1,0 +1,3130 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    105964,       3121]
+NotebookOptionsPosition[     96376,       2804]
+NotebookOutlinePosition[     96729,       2820]
+CellTagsIndexPosition[     96686,       2817]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Alternatives to procedural loops and iterating over lists in Mathematica\
+\>", "Title",
+ CellChangeTimes->{{3.619866383931999*^9, 3.619866412757203*^9}, 
+   3.6198665713175383`*^9, 3.619939792447103*^9, 3.619939982964279*^9}],
+
+Cell[TextData[{
+ "Cited from ",
+ ButtonBox["Mathematica comminity in Stach Exchange",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://mathematica.stackexchange.com/questions/7924/alternatives-to-\
+procedural-loops-and-iterating-over-lists-in-mathematica"], None},
+  ButtonNote->
+   "http://mathematica.stackexchange.com/questions/7924/alternatives-to-\
+procedural-loops-and-iterating-over-lists-in-mathematica"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.619866575582787*^9, 3.619866598366622*^9}, {
+  3.619939743184558*^9, 3.61993978152002*^9}, {3.619939964666222*^9, 
+  3.6199399749998493`*^9}}],
+
+Cell[TextData[{
+ "While there are ",
+ ButtonBox["some cases where a For loop might be reasonable",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://mathematica.stackexchange.com/q/2158/8"], None},
+  ButtonNote->"http://mathematica.stackexchange.com/q/2158/8"],
+ ", it\[CloseCurlyQuote]s a general mantra \[Dash] one I subscribe to myself \
+\[Dash] that \[OpenCurlyDoubleQuote]if you are using a ",
+ StyleBox["For", "Code"],
+ " loop in Mathematica, you are probably doing it wrong\
+\[CloseCurlyDoubleQuote]. But ",
+ StyleBox["For", "Code"],
+ " and ",
+ StyleBox["Do", "Code"],
+ " loops are familiar to people who already know other programming languages. \
+It is common for new Mathematica users to rely on loop constructs, only to \
+become frustrated with performance or code complexity."
+}], "Text",
+ CellChangeTimes->{{3.619934972828869*^9, 3.6199349990285883`*^9}, {
+   3.619935193301546*^9, 3.6199351943177223`*^9}, 3.6199353320635443`*^9}],
+
+Cell[TextData[{
+ "A natural question is: are there some general rules of thumb that would \
+help new users select the appropriate alternative to a procedural ",
+ StyleBox["For", "Code"],
+ " or ",
+ StyleBox["Do", "Code"],
+ " loop, and are there other useful Mathematica constructs, aside from ",
+ StyleBox["RandomVariate", "Code"],
+ "/",
+ StyleBox["Nest", "Code"],
+ "/",
+ StyleBox["Fold", "Code"],
+ "/",
+ StyleBox["Inner", "Code"],
+ "/",
+ StyleBox["Outer", "Code"],
+ "/",
+ StyleBox["Tuples", "Code"],
+ " that they should know about in order to avoid those loops?"
+}], "Text",
+ CellChangeTimes->{{3.619935334918702*^9, 3.619935355889236*^9}}],
+
+Cell["\<\
+In particular, there are a number of ways of iterating over lists:\
+\>", "Text",
+ CellChangeTimes->{3.619935432325954*^9}],
+
+Cell[TextData[{
+ "1. The ",
+ StyleBox["For", "Code"],
+ " loop"
+}], "Text",
+ CellChangeTimes->{{3.619866458428434*^9, 3.619866493350672*^9}, {
+  3.619866523735861*^9, 3.619866538776132*^9}}],
+
+Cell[BoxData[
+ RowBox[{"For", "[", 
+  RowBox[{
+   RowBox[{"i", "=", "1"}], ",", 
+   RowBox[{"i", "\[LessEqual]", "10"}], ",", 
+   RowBox[{"i", "++"}], ",", 
+   RowBox[{
+    RowBox[{"list", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+    "=", 
+    RowBox[{"func", "[", 
+     RowBox[{"list", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+     "]"}]}]}], "]"}]], "Code",
+ CellChangeTimes->{{3.6199352415474367`*^9, 3.619935267899878*^9}, 
+   3.619935480081492*^9, 3.619935745849115*^9}],
+
+Cell[TextData[{
+ "2. The ",
+ StyleBox["Table", "Code"],
+ " function operating over each part of a list in turn:"
+}], "Text",
+ CellChangeTimes->{{3.619935501089179*^9, 3.619935518269946*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"func", "[", 
+    RowBox[{"list", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", 
+     RowBox[{"Length", "[", "list", "]"}]}], "}"}]}], "]"}]], "Code",
+ CellChangeTimes->{{3.6199355332306757`*^9, 3.619935543016575*^9}, 
+   3.619935741283038*^9}],
+
+Cell[TextData[{
+ "3. The ",
+ StyleBox["Do", "Code"],
+ " loop operating over each part of a list in turn:"
+}], "Text",
+ CellChangeTimes->{{3.6199355519163437`*^9, 3.619935558720676*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Do", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"x", "=", 
+      RowBox[{
+      "list", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}]}], ";", 
+     RowBox[{"t", "+=", 
+      RowBox[{"Mod", "[", 
+       RowBox[{"x", ",", "t"}], "]"}]}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "1", ",", 
+      RowBox[{"Length", "[", "list", "]"}]}], "}"}]}], "]"}], 
+  ";"}], "\n", "t"}], "Code",
+ CellChangeTimes->{{3.619935591099124*^9, 3.619935674796464*^9}, 
+   3.6199357328375*^9, {3.620007287665249*^9, 3.6200072915846577`*^9}}],
+
+Cell[TextData[{
+ "4. ",
+ StyleBox["Map", "Code"],
+ " ping a function onto each element of a list:"
+}], "Text",
+ CellChangeTimes->{{3.619935688749268*^9, 3.6199356982035437`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"3", " ", "-", " ", "#"}], ")"}], "/", 
+    RowBox[{"(", 
+     RowBox[{"7", " ", "*", " ", "#"}], ")"}]}], " ", "&"}], " ", "/@", " ", 
+  "list"}]], "Code",
+ CellChangeTimes->{{3.619935712394391*^9, 3.619935721284464*^9}}],
+
+Cell[TextData[{
+ "5. And for nested lists, there are constructs like ",
+ StyleBox["MapThread", "Code"],
+ ":"
+}], "Text",
+ CellChangeTimes->{{3.6199357589904413`*^9, 3.619935760343946*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Mod", "[", 
+       RowBox[{"#", ",", " ", "#2"}], "]"}], " ", "*", " ", 
+      RowBox[{"Floor", "[", 
+       RowBox[{"#3", "/", "#"}], "]"}]}], " ", "&"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"a", " ", "=", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "18", ",", " ", "85", ",", " ", "22", ",", " ", "20", ",", " ", "39"}],
+        "}"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{
+       "17", ",", " ", "67", ",", " ", "76", ",", " ", "96", ",", " ", "58"}],
+        "}"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{
+       "40", ",", " ", "97", ",", " ", "56", ",", " ", "60", ",", " ", "53"}],
+        "}"}]}], "}"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{"MapThread", "[", 
+  RowBox[{"f", ",", " ", "a"}], "]"}]}], "Code",
+ CellChangeTimes->{
+  3.6199357773694973`*^9, {3.620010518882306*^9, 3.620010519657875*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"2", ",", "18", ",", "44", ",", "60", ",", "39"}], "}"}]], "Output",\
+
+ CellChangeTimes->{{3.6200105117738523`*^9, 3.62001052192444*^9}}]
+}, Open  ]],
+
+Cell["\<\
+New users of Mathematica will usually pick options 1 or 3 and use C - style \
+or Matlab approaches that involve the following multistep process :\
+\>", "Text",
+ CellChangeTimes->{{3.6199357932389793`*^9, 3.6199357989303637`*^9}, {
+  3.6199401803599253`*^9, 3.6199402077032957`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Defining an empty list", "ItemNumbered",
+ CellChangeTimes->{{3.619940219671937*^9, 3.6199402253085203`*^9}}],
+
+Cell["Setting up a loop", "ItemNumbered",
+ CellChangeTimes->{{3.619940219671937*^9, 3.619940242933022*^9}}],
+
+Cell["\<\
+Optionally define a variable (usually not localised) to equal the iterator, \
+which is then used in subsequent calculations within the loop\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.619940219671937*^9, 3.61994024820613*^9}}],
+
+Cell["\<\
+Within each loop iteration, use the local variable defined to equal the \
+iterator to redefine each element of that list in turn according to some \
+function\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.619940219671937*^9, 3.619940277726426*^9}}],
+
+Cell["\<\
+If the list is multidimensional, nest another loop inside that.\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.619940219671937*^9, 3.6199402875493793`*^9}}]
+}, Open  ]],
+
+Cell["\<\
+What are some useful guides to help users coming from other languages to \
+Mathematica to improve the conciseness and efficiency of their code by \
+avoiding unnecessary loops?\
+\>", "Text",
+ CellChangeTimes->{3.619940297496255*^9}],
+
+Cell[CellGroupData[{
+
+Cell["2. Let\[CloseCurlyQuote]s improve the specific cases given.", "Section",
+ CellChangeTimes->{
+  3.619940398487299*^9, {3.620013786971599*^9, 3.620013788337875*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Case #1", "Subsection",
+ CellChangeTimes->{{3.6199404194203787`*^9, 3.61994042767594*^9}}],
+
+Cell["\<\
+Explicit loops are often counterproductive in Mathematica, not only taking \
+more keystrokes, but also more execution time. They are also, in my opinion, \
+more prone to mistakes.\
+\>", "Text",
+ CellChangeTimes->{3.6199404638771477`*^9, 3.619940498898183*^9}],
+
+Cell[TextData[{
+ "Better ways are to use ",
+ StyleBox["Do", "Code"],
+ ", ",
+ StyleBox["Scan", "Code"],
+ ", or ",
+ StyleBox["Map", "Code"],
+ "."
+}], "Text",
+ CellChangeTimes->{3.619940502603139*^9}],
+
+Cell[TextData[{
+ StyleBox["Do", "Code"],
+ " and ",
+ StyleBox["Scan", "Code"],
+ " are (typically) appropriate for operations that do not accumulate a list \
+of results, while ",
+ StyleBox["Map", "Code"],
+ " and ",
+ StyleBox["Table", "Code"],
+ " (a variant of ",
+ StyleBox["Do", "Code"],
+ ") are (typically) used for ones that do. The third method uses ",
+ StyleBox["Map", "Code"],
+ " (short form: ",
+ StyleBox["/@", "Code"],
+ ") and accumulates a useless list of results; for this reason it is likely \
+to be less memory efficient than the first two."
+}], "Text",
+ CellChangeTimes->{3.619940540375739*^9}],
+
+Cell[TextData[{
+ "Use ",
+ StyleBox["Timing", "Code"],
+ " to evluate function ",
+ StyleBox["PrimeQ", "Code"],
+ "  for 10^6 iterations (in list ",
+ StyleBox["Range[10^6]", "Code"],
+ "):"
+}], "Text",
+ CellChangeTimes->{
+  3.61994206706745*^9, {3.619942218316483*^9, 3.619942236851823*^9}, {
+   3.619942294846739*^9, 3.619942327207877*^9}, {3.619942381233917*^9, 
+   3.6199423837604218`*^9}, {3.619942903790906*^9, 3.6199429063815203`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"For", "[", 
+    RowBox[{
+     RowBox[{"i", "=", "1"}], ",", 
+     RowBox[{"i", "\[LessEqual]", 
+      RowBox[{"10", "^", "6"}]}], ",", 
+     RowBox[{"i", "++"}], ",", 
+     RowBox[{"PrimeQ", "[", "i", "]"}]}], "]"}], ";"}], "//", 
+  "Timing"}]], "Code",
+ CellChangeTimes->{{3.619941679395052*^9, 3.61994172206223*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1.21106800000000003336708687129430472851`6.103768442215955", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.619941723830303*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"PrimeQ", "[", "i", "]"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", " ", 
+       RowBox[{"10", "^", "6"}]}], "}"}]}], "]"}], ";"}], "//", 
+  "Timing"}]], "Code",
+ CellChangeTimes->{{3.619940765321858*^9, 3.619940771081285*^9}, {
+  3.619940910971175*^9, 3.6199409189923353`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.49885600000000002163247359021625015885`5.718575113350493", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.619940780781351*^9, 3.6199409213572607`*^9, 
+  3.619941734666854*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Scan", "[", 
+    RowBox[{"PrimeQ", ",", 
+     RowBox[{"Range", "@", 
+      RowBox[{"(", 
+       RowBox[{"10", "^", "6"}], ")"}]}]}], "]"}], ";"}], "//", 
+  "Timing"}]], "Code",
+ CellChangeTimes->{{3.6199408237870007`*^9, 3.619940835984415*^9}, {
+  3.619940925300022*^9, 3.619940927964059*^9}, {3.619941510675481*^9, 
+  3.619941544634596*^9}, {3.619941591102521*^9, 3.619941596795053*^9}, {
+  3.6199416418049583`*^9, 3.619941644897571*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.46325899999999997636024318126146681607`5.686423778642107", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.619940836651251*^9, 3.6199409307792253`*^9, 
+  3.619941516053008*^9, 3.6199415464040947`*^9, 3.619941599967483*^9, 
+  3.619941655155674*^9, 3.61994173748726*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PrimeQ", "/@", 
+    RowBox[{"Range", "@", 
+     RowBox[{"(", 
+      RowBox[{"10", "^", "6"}], ")"}]}]}], ";"}], "//", "Timing"}]], "Code",
+ CellChangeTimes->{{3.619940863875177*^9, 3.619940874544348*^9}, {
+  3.619940939798457*^9, 3.619940942212788*^9}, {3.619941520153687*^9, 
+  3.6199415207131567`*^9}, {3.619941565134488*^9, 3.619941567476074*^9}, {
+  3.619941603614141*^9, 3.619941609036149*^9}, {3.61994164807695*^9, 
+  3.619941662570717*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.51632299999999997641708660012227483094`5.73352138473514", ",", "Null"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.6199408752666807`*^9, 3.6199409443277273`*^9, 3.619941523829238*^9, 
+   3.6199415688615847`*^9, 3.619941610257559*^9, {3.619941652250471*^9, 
+   3.619941665655725*^9}, 3.619941740243866*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Case #2", "Subsection",
+ CellChangeTimes->{{3.619941791888698*^9, 3.619941794407567*^9}}],
+
+Cell[TextData[{
+ "As mentioned in case #1, one can use ",
+ StyleBox["Table", "Code"],
+ " to generate lists of arbitrary expressions."
+}], "Text",
+ CellChangeTimes->{{3.619941918672544*^9, 3.6199419815151663`*^9}, {
+  3.619943554777911*^9, 3.619943578413261*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"func", "[", "i", "]"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", " ", "list"}], "}"}]}], "]"}]], "Code",
+ CellChangeTimes->{3.619941998632923*^9}],
+
+Cell[TextData[{
+ " Also, this simple example can be written in ",
+ StyleBox["Map", "Code"],
+ "(",
+ StyleBox["/@", "Code"],
+ "):"
+}], "Text",
+ CellChangeTimes->{
+  3.619942009025441*^9, {3.619942995599381*^9, 3.619943011383356*^9}, 
+   3.619943550850662*^9, {3.6199435872294397`*^9, 3.619943589437605*^9}}],
+
+Cell[BoxData[
+ RowBox[{"func", " ", "/@", " ", "list"}]], "Code",
+ CellChangeTimes->{{3.6199420214477253`*^9, 3.6199420225365057`*^9}}],
+
+Cell[TextData[{
+ "which is preferred. However, there are more complex cases where ",
+ StyleBox["Table", "Code"],
+ " is far more elegant than the alternatives."
+}], "Text",
+ CellChangeTimes->{3.619942032793824*^9}],
+
+Cell[TextData[{
+ "Use ",
+ StyleBox["Timing", "Code"],
+ "  to evaluate function ",
+ StyleBox["PrimeQ", "Code"],
+ " for 10^6 iterations:"
+}], "Text",
+ CellChangeTimes->{{3.619942889032423*^9, 3.619942944631188*^9}, {
+  3.61994303864219*^9, 3.6199430522886*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"PrimeQ", "[", "i", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", 
+       RowBox[{"Range", "@", 
+        RowBox[{"(", 
+         RowBox[{"10", "^", "6"}], ")"}]}]}], "}"}]}], "]"}], ";"}], "//", 
+  "Timing"}]], "Code",
+ CellChangeTimes->{{3.619943068058502*^9, 3.6199430921408157`*^9}, {
+  3.619943150418846*^9, 3.6199431562642937`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.54070899999999999518962567890412174165`5.753563511665694", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.619943094078603*^9, 3.619943159084587*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PrimeQ", " ", "/@", " ", 
+    RowBox[{"Range", "@", 
+     RowBox[{"(", 
+      RowBox[{"10", "^", "6"}], ")"}]}]}], ";"}], "//", "Timing"}]], "Input",
+ CellChangeTimes->{{3.619943097854928*^9, 3.619943168272256*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.53982799999999997453414835035800933838`5.75285532023247", ",", "Null"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.619943141088069*^9, 3.619943170337562*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Case #3", "Subsection",
+ CellChangeTimes->{{3.6199432019469633`*^9, 3.619943205282476*^9}}],
+
+Cell[TextData[{
+ "For some special cases, there are alternatives available: ",
+ StyleBox["Fold", "Code"],
+ " and ",
+ StyleBox["FoldList", "Code"],
+ ". Any time you want to iterate through a list, using the result of the \
+previous \[OpenCurlyDoubleQuote]loop\[CloseCurlyDoubleQuote] along the way, \
+look to ",
+ StyleBox["Fold", "Code"],
+ " and ",
+ StyleBox["FoldList", "Code"],
+ ", efficient in both syntax and computation."
+}], "Text",
+ CellChangeTimes->{
+  3.619943301695146*^9, 3.6199434284678383`*^9, {3.619945533767859*^9, 
+   3.619945579694168*^9}, {3.619946704015216*^9, 3.6199467422341433`*^9}, {
+   3.620006458872816*^9, 3.620006504193922*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "f", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", "[", "1", "]"}], "=", "9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", "[", "n_", "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{"f", "[", 
+     RowBox[{"n", "-", "1"}], "]"}], "+", 
+    RowBox[{"Mod", "[", 
+     RowBox[{
+      RowBox[{"n", "-", "1"}], ",", 
+      RowBox[{"f", "[", 
+       RowBox[{"n", "-", "1"}], "]"}]}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f", "/@", " ", 
+   RowBox[{"Range", "@", 
+    RowBox[{"(", 
+     RowBox[{"20", "+", "1"}], ")"}]}]}], "//", "Timing"}]}], "Code",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQBWIQHbSVZVvdj1eOC2I8wfTSr9en1QNpkw1rZoDoPFa2
+RyDafHkjmLYQb30Gorc0lz8H0Rf+9jE0AOncjzyMIDpvKj87iJ7+SJYHRHOV
+dAuA6Gd+k4VA9JUuRiUQvWybqDKIFnCaqQuiD/ksA9Mr0t5ZgOgXJmquIPrM
+x9wIEK2z5l80iBYpP9sMomu8pneBaOPa3RtA9KuWti0gurFK9iiIPrpaDUxf
+M/G6BKJlXnleBtELbXmvg+ilFeZgOsX4+8xGID1lA88sEK0SLjIfRC9LY14A
+oi9wah0F0Vt/xYPpUwcDzs8B0ic61l0G0T9Li76D6CazKWAaAChxxMI=
+  "]],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"4.18213499999999971379338603583164513111`6.641997961084271", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "9", ",", "10", ",", "12", ",", "15", ",", "19", ",", "24", ",", "30", 
+     ",", "37", ",", "45", ",", "54", ",", "64", ",", "75", ",", "87", ",", 
+     "100", ",", "114", ",", "129", ",", "145", ",", "162", ",", "180", ",", 
+     "199", ",", "219"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.61994664503257*^9, 3.619946777469222*^9, 3.6199468638365993`*^9, 
+   3.619946896579925*^9, 3.619946957171104*^9, {3.619947001521799*^9, 
+   3.619947017993067*^9}, 3.6199470519957037`*^9, 3.619947212200881*^9, {
+   3.6199475456645107`*^9, 3.619947575210373*^9}, {3.619947907332901*^9, 
+   3.619947916162142*^9}, 3.6199480710982513`*^9, {3.619948174318643*^9, 
+   3.6199481917720346`*^9}, 3.619948224922647*^9, {3.619949777472106*^9, 
+   3.6199497991351357`*^9}, {3.61995011949739*^9, 3.6199501280703*^9}, {
+   3.620005523359886*^9, 3.6200055410202627`*^9}, 3.6200058319384623`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"f", "=", "9"}], ";", 
+  RowBox[{"list", "=", 
+   RowBox[{"{", "9", "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Do", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"f", "=", 
+      RowBox[{"f", "+", 
+       RowBox[{"Mod", "[", 
+        RowBox[{"i", ",", "f"}], "]"}]}]}], ";", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"list", ",", "f"}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", 
+      RowBox[{"Range", "@", "20"}]}], "}"}]}], "]"}], ";"}], "\n", 
+ RowBox[{"list", "//", "Timing"}]}], "Code",
+ CellChangeTimes->{{3.619949638800953*^9, 3.619949689194254*^9}, {
+  3.619949747765285*^9, 3.61994975585085*^9}, {3.619949980612306*^9, 
+  3.6199499863782578`*^9}, {3.619950025683823*^9, 3.619950064198104*^9}, {
+  3.61995023625775*^9, 3.619950251223724*^9}, {3.619950341338476*^9, 
+  3.6199503844422398`*^9}, {3.6199504227059927`*^9, 3.619950516616946*^9}, {
+  3.619950636056596*^9, 3.619950667181123*^9}, {3.620005546869269*^9, 
+  3.620005563216206*^9}, {3.620005917664568*^9, 3.62000591864952*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"3.99999999999999981899244730354503`0.6226599046075864*^-6", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "9", ",", "10", ",", "12", ",", "15", ",", "19", ",", "24", ",", "30", 
+     ",", "37", ",", "45", ",", "54", ",", "64", ",", "75", ",", "87", ",", 
+     "100", ",", "114", ",", "129", ",", "145", ",", "162", ",", "180", ",", 
+     "199", ",", "219"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.619950425593251*^9, {3.6199504708022003`*^9, 3.6199505177304897`*^9}, {
+   3.6199506385682993`*^9, 3.619950667671344*^9}, 3.6200055670074463`*^9, 
+   3.620005921063624*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FoldList", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"#", " ", "+", " ", 
+      RowBox[{"Mod", "[", 
+       RowBox[{"#2", ",", " ", "#"}], "]"}]}], " ", "&"}], ",", " ", "9", ",",
+     " ", 
+    RowBox[{"Range", "@", 
+     RowBox[{"(", "20", ")"}]}]}], "]"}], "//", "Timing"}]], "Code",
+ CellChangeTimes->{{3.619943432037119*^9, 3.6199434504441338`*^9}, {
+   3.619944744843294*^9, 3.619944751906925*^9}, 3.619944919512431*^9, 
+   3.619944967127207*^9, {3.61994521243814*^9, 3.619945213042739*^9}, {
+   3.619945283015492*^9, 3.619945284750453*^9}, {3.619946654516433*^9, 
+   3.619946655366825*^9}, {3.619946829269477*^9, 3.619946829680108*^9}, 
+   3.619946875757904*^9, {3.619947245943918*^9, 3.619947246319256*^9}, {
+   3.6199475853055477`*^9, 3.6199475860544558`*^9}, {3.61994792944589*^9, 
+   3.6199479467796926`*^9}, {3.619948079345896*^9, 3.619948079791841*^9}, {
+   3.619948222703302*^9, 3.619948222981236*^9}, {3.620005575189679*^9, 
+   3.620005579271491*^9}, {3.620005700058735*^9, 3.620005701108622*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.00005599999999999999915996015675823116`1.7687879402858244", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "9", ",", "10", ",", "12", ",", "15", ",", "19", ",", "24", ",", "30", 
+     ",", "37", ",", "45", ",", "54", ",", "64", ",", "75", ",", "87", ",", 
+     "100", ",", "114", ",", "129", ",", "145", ",", "162", ",", "180", ",", 
+     "199", ",", "219"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.6199466564073067`*^9, 3.619946830302631*^9, {3.619946870668977*^9, 
+   3.619946876499661*^9}, 3.6199475871118193`*^9, 3.619947931714632*^9, 
+   3.6199482264340677`*^9, 3.6200055820641623`*^9, 3.620005703576889*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "f", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", "[", "1", "]"}], "=", "9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", "[", "n_", "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{"f", "[", 
+     RowBox[{"n", "-", "1"}], "]"}], "+", 
+    RowBox[{"Mod", "[", 
+     RowBox[{
+      RowBox[{"n", "-", "1"}], ",", 
+      RowBox[{"f", "[", 
+       RowBox[{"n", "-", "1"}], "]"}]}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f", "[", 
+   RowBox[{"Last", "[", 
+    RowBox[{"Range", "@", "21"}], "]"}], "]"}], "//", "Timing"}]}], "Code",
+ CellChangeTimes->{{3.619948668489183*^9, 3.619948692672042*^9}, {
+  3.619950769024414*^9, 3.6199508202863903`*^9}, {3.620005594285179*^9, 
+  3.620005612628682*^9}, {3.6200059254796057`*^9, 3.6200059263831*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "2.0583540000000000169677605299511924386`6.334119980997366", ",", "219"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.619948678236684*^9, 3.6199486954875717`*^9}, 
+   3.619950778915977*^9, 3.619950824194768*^9, 3.6200056151142597`*^9, 
+   3.62000593079706*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"f", "=", "9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Do", "[", 
+   RowBox[{
+    RowBox[{"f", "+=", 
+     RowBox[{"Mod", "[", 
+      RowBox[{"i", ",", "f"}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", 
+      RowBox[{"Range", "@", "20"}]}], "}"}]}], "]"}], ";"}], "\n", 
+ RowBox[{"f", "//", "Timing"}]}], "Code",
+ CellChangeTimes->{{3.619948890023376*^9, 3.6199489204856157`*^9}, {
+  3.619949041776822*^9, 3.61994908403279*^9}, {3.619949164443746*^9, 
+  3.619949193946615*^9}, {3.619949255732724*^9, 3.619949257763954*^9}, {
+  3.619949290938079*^9, 3.619949307545335*^9}, {3.619949441214797*^9, 
+  3.619949444132875*^9}, {3.619949489117762*^9, 3.619949508914789*^9}, {
+  3.6199495983024683`*^9, 3.619949600442361*^9}, {3.6199508541412277`*^9, 
+  3.61995086637192*^9}, {3.6200056545067577`*^9, 3.6200056749147453`*^9}, {
+  3.6200059374951773`*^9, 3.620005938433525*^9}, {3.62000693353545*^9, 
+  3.6200069663793707`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "5.00000000000000040901526957015655`0.7195699176156426*^-6", ",", "219"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.6200069230838137`*^9, 3.6200069674803963`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"lst", "=", 
+   RowBox[{"Range", "@", "20"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"t", "=", "9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Do", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"x", "=", 
+      RowBox[{"lst", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}]}],
+      ";", 
+     RowBox[{"t", "+=", 
+      RowBox[{"Mod", "[", 
+       RowBox[{"x", ",", "t"}], "]"}]}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "1", ",", 
+      RowBox[{"Length", "[", "lst", "]"}]}], "}"}]}], "]"}], ";"}], "\n", 
+ RowBox[{"t", "//", "Timing"}]}], "Code",
+ CellChangeTimes->{{3.6200068121565447`*^9, 3.620006863405517*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "9.00000000000000022800771687370158`0.9748424227189488*^-6", ",", "219"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.619949059750701*^9, 3.619949087512589*^9}, {
+   3.619949170915114*^9, 3.619949194945657*^9}, {3.61994926404018*^9, 
+   3.6199492713884172`*^9}, 3.619949308450308*^9, {3.6199494453080187`*^9, 
+   3.619949450292274*^9}, {3.619949493585956*^9, 3.6199495108227863`*^9}, 
+   3.61994960142402*^9, 3.6199508671613903`*^9, 3.620005677401638*^9, 
+   3.620005940385458*^9, 3.6200068660761633`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Fold", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"#", " ", "+", " ", 
+      RowBox[{"Mod", "[", 
+       RowBox[{"#2", ",", " ", "#"}], "]"}]}], " ", "&"}], ",", " ", "9", ",",
+     " ", 
+    RowBox[{"Range", "@", "20"}]}], "]"}], "//", "Timing"}]], "Code",
+ CellChangeTimes->{{3.6199486160119553`*^9, 3.6199486189871597`*^9}, {
+  3.619949518823409*^9, 3.6199495233477783`*^9}, {3.6199496054772243`*^9, 
+  3.619949607243005*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.00003499999999999999693387625621099346`1.5646679576298994", ",", "219"}],
+   "}"}]], "Output",
+ CellChangeTimes->{
+  3.619943451097657*^9, {3.6199447458210278`*^9, 3.619944752673748*^9}, 
+   3.619944921124008*^9, 3.619944967980592*^9, 3.619945213737567*^9, 
+   3.619945285337491*^9, 3.619948620118685*^9, 3.619949524375453*^9, 
+   3.61994960788025*^9, 3.620005943916127*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Remark: from examples in case #3, we can see that ",
+ StyleBox["Do", "Code"],
+ " loop is suppreringly efficient in current Mathematica."
+}], "Text",
+ CellChangeTimes->{{3.620006317913033*^9, 3.620006382215622*^9}, {
+  3.620006415623415*^9, 3.620006433263647*^9}, {3.6213891000345373`*^9, 
+  3.6213891055286818`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Case #4", "Subsection",
+ CellChangeTimes->{{3.619950926809569*^9, 3.6199509298327913`*^9}}],
+
+Cell[TextData[{
+ "There is nothing intrinsically wrong with this. However, all of the \
+operations within the ",
+ ButtonBox["pure function",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://reference.wolfram.com/mathematica/ref/Function.html"], None},
+  ButtonNote->"http://reference.wolfram.com/mathematica/ref/Function.html"],
+ " have the Attribute ",
+ StyleBox[ButtonBox["Listable",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://reference.wolfram.com/mathematica/ref/Listable.html"], None},
+  ButtonNote->"http://reference.wolfram.com/mathematica/ref/Listable.html"], 
+  "Code"],
+ ". Therefore, this function can directly accept a list without using ",
+ StyleBox["Map", "Code"],
+ ", and this will be considerably more efficient."
+}], "Text",
+ CellChangeTimes->{
+  3.619950942127451*^9, {3.619950998482542*^9, 3.619951010972939*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"3", " ", "-", " ", "#"}], ")"}], "/", 
+    RowBox[{"(", 
+     RowBox[{"7", " ", "*", " ", "#"}], ")"}]}], " ", "&"}], " ", "@", " ", 
+  "list"}]], "Code",
+ CellChangeTimes->{3.619951112510166*^9}],
+
+Cell[TextData[{
+ "Use ",
+ StyleBox["Timing", "Code"],
+ " to evaluate the function given above for a list of 10^6 integer:"
+}], "Text",
+ CellChangeTimes->{{3.619951120957292*^9, 3.619951188400497*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"list", "=", 
+   RowBox[{"Range", "@", 
+    RowBox[{"(", 
+     RowBox[{"10", "^", "6"}], ")"}]}]}], ";"}]], "Code",
+ CellChangeTimes->{3.619951276102502*^9, 3.620007339648711*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"3", " ", "-", " ", "#"}], ")"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"7", " ", "*", " ", "#"}], ")"}]}], " ", "&"}], " ", "@", " ", 
+    "list"}], ";"}], "//", "Timing"}]], "Code",
+ CellChangeTimes->{{3.6199511925133047`*^9, 3.6199512417018137`*^9}, {
+   3.619951274406974*^9, 3.619951278742567*^9}, 3.620007345207655*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.86200500000000002120970066243899054825`5.956109698206555", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.619951243258367*^9, 3.619951283746969*^9, 
+  3.6200073483886213`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"3", " ", "-", " ", "#"}], ")"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"7", " ", "*", " ", "#"}], ")"}]}], " ", "&"}], " ", "/@", " ",
+     "list"}], ";"}], "//", "Timing"}]], "Code",
+ CellChangeTimes->{{3.619951298319668*^9, 3.619951327268118*^9}, 
+   3.620007355654747*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "2.0158309999999999284625573636731132865`6.325054032896379", ",", "Null"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.6199513317518663`*^9, 3.620007360172718*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Case #5", "Subsection",
+ CellChangeTimes->{{3.619951373417676*^9, 3.619951377328327*^9}}],
+
+Cell[TextData[{
+ "This is similar to case #4, but a little more complicated. Once again, each \
+subfunction in ",
+ StyleBox["f", "Code"],
+ " is ",
+ StyleBox["Listable", "Code"],
+ " but this is not being leveraged. One can use ",
+ StyleBox[ButtonBox["Apply",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://reference.wolfram.com/mathematica/ref/Apply.html"], None},
+  ButtonNote->"http://reference.wolfram.com/mathematica/ref/Apply.html"], 
+  "Code"],
+ " to pass the sub-lists in ",
+ StyleBox["a", "Code"],
+ " as arguments to ",
+ StyleBox["f", "Code"],
+ ":"
+}], "Text",
+ CellChangeTimes->{
+  3.6199513963972263`*^9, {3.619951442963269*^9, 3.61995144296439*^9}}],
+
+Cell[BoxData[
+ RowBox[{"f", " ", "@@", " ", "a"}]], "Code",
+ CellChangeTimes->{3.620008409471449*^9}],
+
+Cell[TextData[{
+ "Suppose that not all of the functions are ",
+ StyleBox["Listable", "Code"],
+ ". I create a dummy addition function ",
+ StyleBox["g", "Code"],
+ " that only accepts integers, not lists. I then include this in ",
+ StyleBox["f", "Code"],
+ ", and try to ",
+ StyleBox["Apply", "Code"],
+ " it again:"
+}], "Text",
+ CellChangeTimes->{3.620008445059655*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"a", " ", "=", " ", 
+   RowBox[{"Partition", "[", 
+    RowBox[{
+     RowBox[{"Range", "@", 
+      RowBox[{"(", 
+       RowBox[{"3", "*", 
+        RowBox[{"10", "^", "2"}]}], ")"}]}], ",", " ", 
+     RowBox[{"10", "^", "2"}]}], "]"}]}], ";"}]], "Code",
+ CellChangeTimes->{
+  3.620011097910142*^9, {3.620011195116745*^9, 3.620011197514892*^9}, {
+   3.620011724444631*^9, 3.620011727801915*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", 
+  RowBox[{"g", ",", " ", "f"}], "]"}], "\n", 
+ RowBox[{
+  RowBox[{"g", "[", 
+   RowBox[{"n_Integer", ",", " ", "m_Integer"}], "]"}], " ", ":=", " ", 
+  RowBox[{"n", " ", "+", " ", "m"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Mod", "[", 
+       RowBox[{"#", ",", " ", "#2"}], "]"}], " ", "*", " ", 
+      RowBox[{"Floor", "[", 
+       RowBox[{"#3", "/", "#"}], "]"}], " ", "*", " ", 
+      RowBox[{"g", "[", 
+       RowBox[{"#2", ",", " ", "#"}], "]"}]}], " ", "&"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"f", " ", "@@", " ", "a"}], "//", "Timing"}]}], "Code",
+ CellChangeTimes->{{3.620008502738236*^9, 3.620008504537829*^9}, 
+   3.620008570768189*^9, {3.620008996719829*^9, 3.620009016046671*^9}, {
+   3.620010111585514*^9, 3.6200101339414883`*^9}, {3.620010266634879*^9, 
+   3.620010267490131*^9}, {3.62001044373752*^9, 3.620010444864023*^9}, 
+   3.620011107670876*^9, {3.6200115032301817`*^9, 3.620011538294359*^9}, {
+   3.620011623533025*^9, 3.620011626926455*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   FrameBox[GridBox[{
+      {
+       ItemBox[
+        TagBox[
+         RowBox[{"{", 
+          RowBox[{
+          "0.00021000000000000000870831184940357161`2.3428192080135437", ",", 
+           
+           RowBox[{"{", 
+            TemplateBox[{"1"},
+             "OutputSizeLimit`Skeleton",
+             DisplayFunction->(FrameBox[
+               
+               RowBox[{
+                "\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}], 
+               Background -> GrayLevel[0.75], 
+               BaseStyle -> {
+                "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                 ShowStringCharacters -> False}, BaselinePosition -> Baseline,
+                ContentPadding -> False, FrameMargins -> 1, FrameStyle -> 
+               GrayLevel[0.75], RoundingRadius -> 7]& )], "}"}]}], "}"}],
+         Short[#, 5]& ],
+        BaseStyle->{Deployed -> False},
+        StripOnInput->False]},
+      {GridBox[{
+         {
+          TagBox[
+           TooltipBox[
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource[
+                "FEStrings", "sizeBriefExplanation"], StandardForm],
+               ImageSizeCache->{58., {2., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarCategory",
+             StripOnInput->False],
+            StyleBox[
+             DynamicBox[
+              ToBoxes[
+               FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"], 
+               StandardForm]], DynamicUpdating -> True, StripOnInput -> 
+             False]],
+           Annotation[#, 
+            Style[
+             Dynamic[
+              FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"]], 
+             DynamicUpdating -> True], "Tooltip"]& ], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
+                StandardForm],
+               ImageSizeCache->{51., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 213, -2569749266888085413, 5/2],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
+                StandardForm],
+               ImageSizeCache->{56., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 213, -2569749266888085413, 5 2],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
+                StandardForm],
+               ImageSizeCache->{42., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 213, -2569749266888085413, Infinity],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
+                StandardForm],
+               ImageSizeCache->{73., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
+                StandardForm],
+               ImageSizeCache->{74., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           ButtonFunction:>FrontEndExecute[{
+              FrontEnd`SetOptions[
+              FrontEnd`$FrontEnd, 
+               FrontEnd`PreferencesSettings -> {"Page" -> "Evaluation"}], 
+              FrontEnd`FrontEndToken["PreferencesDialog"]}],
+           Evaluator->None,
+           Method->"Preemptive"]}
+        },
+        AutoDelete->False,
+        FrameStyle->GrayLevel[0.85],
+        GridBoxDividers->{"Columns" -> {False, {True}}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {{2}}}]}
+     },
+     DefaultBaseStyle->"Column",
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxDividers->{
+      "Columns" -> {{False}}, "ColumnsIndexed" -> {}, "Rows" -> {{False}}, 
+       "RowsIndexed" -> {}},
+     GridBoxItemSize->{
+      "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.5599999999999999]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], 
+         Offset[1.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}],
+    Background->RGBColor[0.9657, 0.9753, 0.9802],
+    FrameMargins->{{12, 12}, {0, 15}},
+    FrameStyle->GrayLevel[0.85],
+    RoundingRadius->5,
+    StripOnInput->False],
+   Deploy,
+   DefaultBaseStyle->"Deploy"],
+  Out[213]]], "Output",
+ CellChangeTimes->{
+  3.620009016662171*^9, {3.6200101144445047`*^9, 3.620010134726035*^9}, {
+   3.620010269975213*^9, 3.6200102736350613`*^9}, 3.620010445560239*^9, 
+   3.620011110332443*^9, 3.620011201744668*^9, 3.620011539062439*^9, 
+   3.620011732337782*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "But the result is incorrect. One could go back to ",
+ StyleBox["MapThread", "Code"],
+ ":"
+}], "Text",
+ CellChangeTimes->{
+  3.620008518362194*^9, 3.6200085648548527`*^9, {3.620011609812311*^9, 
+   3.620011669922605*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", 
+  RowBox[{"g", ",", " ", "f"}], "]"}], "\n", 
+ RowBox[{
+  RowBox[{"g", "[", 
+   RowBox[{"n_Integer", ",", " ", "m_Integer"}], "]"}], " ", ":=", " ", 
+  RowBox[{"n", " ", "+", " ", "m"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Mod", "[", 
+       RowBox[{"#", ",", " ", "#2"}], "]"}], " ", "*", " ", 
+      RowBox[{"Floor", "[", 
+       RowBox[{"#3", "/", "#"}], "]"}], " ", "*", " ", 
+      RowBox[{"g", "[", 
+       RowBox[{"#2", ",", " ", "#"}], "]"}]}], " ", "&"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"MapThread", "[", 
+   RowBox[{"f", ",", "a"}], "]"}], "//", "Timing"}]}], "Code",
+ CellChangeTimes->{3.620011653084464*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0.00032200000000000002058075931898883937`2.528455784975455", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "20502", ",", "21008", ",", "21306", ",", "22032", ",", "22550", ",", 
+     "22848", ",", "23142", ",", "24128", ",", "24426", ",", "25200", ",", 
+     "25498", ",", "25296", ",", "26208", ",", "26880", ",", "27300", ",", 
+     "27456", ",", "27336", ",", "29376", ",", "28842", ",", "30800", ",", 
+     "29820", ",", "31680", ",", "30222", ",", "31968", ",", "33750", ",", 
+     "31616", ",", "33264", ",", "34944", ",", "32074", ",", "33600", ",", 
+     "35154", ",", "36736", ",", "38346", ",", "34272", ",", "35700", ",", 
+     "37152", ",", "38628", ",", "40128", ",", "41652", ",", "43200", ",", 
+     "37310", ",", "38640", ",", "39990", ",", "41360", ",", "42750", ",", 
+     "44160", ",", "45590", ",", "47040", ",", "48510", ",", "50000", ",", 
+     "41208", ",", "42432", ",", "43672", ",", "44928", ",", "46200", ",", 
+     "47488", ",", "48792", ",", "50112", ",", "51448", ",", "52800", ",", 
+     "54168", ",", "55552", ",", "56952", ",", "58368", ",", "59800", ",", 
+     "61248", ",", "47034", ",", "48144", ",", "49266", ",", "50400", ",", 
+     "51546", ",", "52704", ",", "53874", ",", "55056", ",", "56250", ",", 
+     "57456", ",", "58674", ",", "59904", ",", "61146", ",", "62400", ",", 
+     "63666", ",", "64944", ",", "66234", ",", "67536", ",", "68850", ",", 
+     "70176", ",", "71514", ",", "72864", ",", "74226", ",", "75600", ",", 
+     "76986", ",", "78384", ",", "79794", ",", "81216", ",", "82650", ",", 
+     "84096", ",", "85554", ",", "87024", ",", "88506", ",", "90000"}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.620011684178667*^9, 3.6200117372823553`*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "But a better way, when possible, is to make ",
+ StyleBox["g ", "Code"],
+ "handle lists, which will usually be faster on large sets. Here are two ways \
+of doing that. Give ",
+ StyleBox["g", "Code"],
+ " the ",
+ StyleBox["Listable", "Code"],
+ " attribute, and Mathematica will automatically thread over lists:"
+}], "Text",
+ CellChangeTimes->{3.620011673579735*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", 
+  RowBox[{"g", ",", " ", "f"}], "]"}], "\n", 
+ RowBox[{"SetAttributes", "[", 
+  RowBox[{"g", ",", " ", "Listable"}], "]"}], "\n", 
+ RowBox[{
+  RowBox[{"g", "[", 
+   RowBox[{"n_Integer", ",", " ", "m_Integer"}], "]"}], " ", ":=", " ", 
+  RowBox[{"n", " ", "+", " ", "m"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Mod", "[", 
+       RowBox[{"#", ",", " ", "#2"}], "]"}], " ", "*", " ", 
+      RowBox[{"Floor", "[", 
+       RowBox[{"#3", "/", "#"}], "]"}], " ", "*", " ", 
+      RowBox[{"g", "[", 
+       RowBox[{"#2", ",", " ", "#"}], "]"}]}], " ", "&"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"f", " ", "@@", " ", "a"}], "//", "Timing"}]}], "Code",
+ CellChangeTimes->{
+  3.620008568041798*^9, {3.620009023277075*^9, 3.6200090391024237`*^9}, {
+   3.62001027817048*^9, 3.620010289258065*^9}, {3.620010935588071*^9, 
+   3.620010967071097*^9}, {3.620011067603054*^9, 3.620011095461656*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0.0002149999999999999947177670156506224`2.353038373195229", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "20502", ",", "21008", ",", "21306", ",", "22032", ",", "22550", ",", 
+     "22848", ",", "23142", ",", "24128", ",", "24426", ",", "25200", ",", 
+     "25498", ",", "25296", ",", "26208", ",", "26880", ",", "27300", ",", 
+     "27456", ",", "27336", ",", "29376", ",", "28842", ",", "30800", ",", 
+     "29820", ",", "31680", ",", "30222", ",", "31968", ",", "33750", ",", 
+     "31616", ",", "33264", ",", "34944", ",", "32074", ",", "33600", ",", 
+     "35154", ",", "36736", ",", "38346", ",", "34272", ",", "35700", ",", 
+     "37152", ",", "38628", ",", "40128", ",", "41652", ",", "43200", ",", 
+     "37310", ",", "38640", ",", "39990", ",", "41360", ",", "42750", ",", 
+     "44160", ",", "45590", ",", "47040", ",", "48510", ",", "50000", ",", 
+     "41208", ",", "42432", ",", "43672", ",", "44928", ",", "46200", ",", 
+     "47488", ",", "48792", ",", "50112", ",", "51448", ",", "52800", ",", 
+     "54168", ",", "55552", ",", "56952", ",", "58368", ",", "59800", ",", 
+     "61248", ",", "47034", ",", "48144", ",", "49266", ",", "50400", ",", 
+     "51546", ",", "52704", ",", "53874", ",", "55056", ",", "56250", ",", 
+     "57456", ",", "58674", ",", "59904", ",", "61146", ",", "62400", ",", 
+     "63666", ",", "64944", ",", "66234", ",", "67536", ",", "68850", ",", 
+     "70176", ",", "71514", ",", "72864", ",", "74226", ",", "75600", ",", 
+     "76986", ",", "78384", ",", "79794", ",", "81216", ",", "82650", ",", 
+     "84096", ",", "85554", ",", "87024", ",", "88506", ",", "90000"}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.620009039799898*^9, {3.6200102811833143`*^9, 3.620010291415987*^9}, 
+   3.620010969774043*^9, 3.620011075032557*^9, 3.6200111213901873`*^9, 
+   3.62001121155577*^9, 3.6200117411840973`*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Or, if the automatic threading via ",
+ StyleBox["Listable", "Code"],
+ " breaks your function in some way, manually:"
+}], "Text",
+ CellChangeTimes->{3.620008748372139*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", 
+  RowBox[{"g", ",", " ", "f"}], "]"}], "\n", 
+ RowBox[{
+  RowBox[{"g", "[", 
+   RowBox[{"n_Integer", ",", " ", "m_Integer"}], "]"}], " ", ":=", " ", 
+  RowBox[{"n", " ", "+", " ", "m"}]}], "\n", 
+ RowBox[{
+  RowBox[{"g", "[", 
+   RowBox[{"n_List", ",", " ", "m_List"}], "]"}], " ", ":=", " ", 
+  RowBox[{"MapThread", "[", 
+   RowBox[{"Plus", ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", " ", "m"}], "}"}]}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Mod", "[", 
+       RowBox[{"#", ",", " ", "#2"}], "]"}], " ", 
+      RowBox[{"Floor", "[", 
+       RowBox[{"#3", "/", "#"}], "]"}], " ", "*", " ", 
+      RowBox[{"g", "[", 
+       RowBox[{"#2", ",", " ", "#"}], "]"}]}], " ", "&"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"f", " ", "@@", " ", "a"}], "//", "Timing"}]}], "Code",
+ CellChangeTimes->{
+  3.620008767068906*^9, {3.6200090783371563`*^9, 3.620009094954883*^9}, {
+   3.620010294481731*^9, 3.620010295698042*^9}, {3.620011023652194*^9, 
+   3.620011027788443*^9}, 3.620011140261023*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.00018300000000000000294209101525666483`2.2830510030100535", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "20502", ",", "21008", ",", "21306", ",", "22032", ",", "22550", ",", 
+     "22848", ",", "23142", ",", "24128", ",", "24426", ",", "25200", ",", 
+     "25498", ",", "25296", ",", "26208", ",", "26880", ",", "27300", ",", 
+     "27456", ",", "27336", ",", "29376", ",", "28842", ",", "30800", ",", 
+     "29820", ",", "31680", ",", "30222", ",", "31968", ",", "33750", ",", 
+     "31616", ",", "33264", ",", "34944", ",", "32074", ",", "33600", ",", 
+     "35154", ",", "36736", ",", "38346", ",", "34272", ",", "35700", ",", 
+     "37152", ",", "38628", ",", "40128", ",", "41652", ",", "43200", ",", 
+     "37310", ",", "38640", ",", "39990", ",", "41360", ",", "42750", ",", 
+     "44160", ",", "45590", ",", "47040", ",", "48510", ",", "50000", ",", 
+     "41208", ",", "42432", ",", "43672", ",", "44928", ",", "46200", ",", 
+     "47488", ",", "48792", ",", "50112", ",", "51448", ",", "52800", ",", 
+     "54168", ",", "55552", ",", "56952", ",", "58368", ",", "59800", ",", 
+     "61248", ",", "47034", ",", "48144", ",", "49266", ",", "50400", ",", 
+     "51546", ",", "52704", ",", "53874", ",", "55056", ",", "56250", ",", 
+     "57456", ",", "58674", ",", "59904", ",", "61146", ",", "62400", ",", 
+     "63666", ",", "64944", ",", "66234", ",", "67536", ",", "68850", ",", 
+     "70176", ",", "71514", ",", "72864", ",", "74226", ",", "75600", ",", 
+     "76986", ",", "78384", ",", "79794", ",", "81216", ",", "82650", ",", 
+     "84096", ",", "85554", ",", "87024", ",", "88506", ",", "90000"}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.6200090954550056`*^9, 3.620010298398367*^9, 
+  3.62001103038093*^9, 3.62001114488194*^9, 3.620011215751995*^9, 
+  3.620011746567602*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["1. Some informal basic rules", "Section",
+ CellChangeTimes->{{3.62001192117905*^9, 3.6200119485302687`*^9}, {
+  3.6200124973251333`*^9, 3.620012537108099*^9}, {3.620012869703856*^9, 
+  3.620012880926306*^9}, {3.6200129169863987`*^9, 3.620012923990288*^9}, {
+  3.620013797811165*^9, 3.6200137989456167`*^9}}],
+
+Cell["\<\
+There are many alternative ways to approach various programming problems that \
+do not use loops and are more efficient (and concise) in Mathematica. Most of \
+them execute faster, but even where they do not, they are faster to type: \
+development time matters, too!\
+\>", "Text",
+ CellChangeTimes->{3.620011961422943*^9}],
+
+Cell["\<\
+Here are some rules of thumb for easier programming and iterating on lists.
+\
+\>", "Text",
+ CellChangeTimes->{3.620011984257667*^9}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "1. Most arithmetic operations and many other functions are ",
+ StyleBox["Listable", "Code"],
+ ", meaning that they operate element by element without having to set up a \
+loop or operate explicitly on each element"
+}], "Subsubsection",
+ CellChangeTimes->{{3.620012048764118*^9, 3.620012072799135*^9}}],
+
+Cell["\<\
+Addition, multiplication and other standard operations work element by \
+element when they are given conformable vectors, matrices, tensors or \
+generalised lists:\
+\>", "Text",
+ CellChangeTimes->{3.620012119644062*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", 
+  RowBox[{"a", ",", "b", ",", "c", ",", "d", ",", "e", ",", "f", ",", "g"}], 
+  "]"}], "\n", 
+ RowBox[{
+  RowBox[{"list1", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"a", ",", " ", "b", ",", " ", "c"}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"list2", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"e", ",", " ", "f", ",", " ", "g"}], "}"}]}], ";"}], "\n", 
+ RowBox[{"list1", " ", "+", " ", "list2"}]}], "Code",
+ CellChangeTimes->{{3.6200121306670017`*^9, 3.620012159527191*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"a", "+", "e"}], ",", 
+   RowBox[{"b", "+", "f"}], ",", 
+   RowBox[{"c", "+", "g"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.620012137329564*^9, 3.620012164265044*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["Listable", "Code"],
+ " functions include standard arithmetic and trigonometric functions, ",
+ StyleBox["Log", "Code"],
+ ", ",
+ StyleBox["Exp", "Code"],
+ ", ",
+ StyleBox["Mod", "Code"],
+ ", ",
+ StyleBox["Abs", "Code"],
+ " and a huge range of exponential, Bessel-related and other special \
+functions. The following code returns the whole list of ",
+ StyleBox["Listable", "Code"],
+ " functions:"
+}], "Text",
+ CellChangeTimes->{3.620012191780383*^9}],
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"names", " ", "=", " ", 
+     RowBox[{"Names", "[", "\"\<System`*\>\"", "]"}]}], "}"}], ",", " ", "\n",
+    " ", 
+   RowBox[{"Pick", "[", 
+    RowBox[{"names", ",", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"MemberQ", "[", 
+        RowBox[{
+         RowBox[{"Attributes", "[", "#", "]"}], ",", " ", "Listable"}], "]"}],
+        " ", "&"}], " ", "/@", " ", "names"}], ",", " ", "True"}], "]"}]}], 
+  " ", "]"}]], "Code",
+ CellChangeTimes->{3.620012276460019*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+2. In Mathematica, you do not need to declare an empty list and then fill \
+each element in with the desired value one by one\
+\>", "Subsubsection",
+ CellChangeTimes->{{3.620012364428097*^9, 3.620012372966267*^9}}],
+
+Cell["\<\
+For example, typical procedural programming will create an empty vector, and \
+replace each element in turn to create the desired data.\
+\>", "Text",
+ CellChangeTimes->{{3.620012393446186*^9, 3.6200123949146338`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"vec", " ", "=", " ", 
+   RowBox[{"Table", "[", 
+    RowBox[{"0", ",", " ", 
+     RowBox[{"{", "100", "}"}]}], "]"}]}], ";", " ", 
+  RowBox[{"For", "[", 
+   RowBox[{
+    RowBox[{"i", " ", "=", " ", "1"}], ",", " ", 
+    RowBox[{"i", " ", "<=", " ", "100"}], ",", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"vec", "[", 
+       RowBox[{"[", "i", "]"}], "]"}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"RandomReal", "[", "]"}], "+", "2"}]}], ";", " ", 
+     RowBox[{"i", "++"}]}]}], "]"}], ";", " ", "vec"}]], "Code",
+ CellChangeTimes->{3.620012406214534*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "2.5750996523813345`", ",", "2.442828370547267`", ",", 
+   "2.9702732047694758`", ",", "2.2033401845484093`", ",", 
+   "2.635756417172101`", ",", "2.1528381951365283`", ",", 
+   "2.0919972647442657`", ",", "2.0738412039434517`", ",", 
+   "2.7173327882266864`", ",", "2.400117010029725`", ",", 
+   "2.256937863015394`", ",", "2.6683223768444257`", ",", 
+   "2.552187750118498`", ",", "2.0068932350887376`", ",", 
+   "2.0292647495135605`", ",", "2.8203222384928472`", ",", 
+   "2.5400197948680097`", ",", "2.700800731222325`", ",", 
+   "2.865051604764528`", ",", "2.617107157548424`", ",", 
+   "2.3743232996712837`", ",", "2.5599574213590652`", ",", 
+   "2.760400315078885`", ",", "2.985553223183771`", ",", "2.487420562117962`",
+    ",", "2.7194929783682293`", ",", "2.8742219509453992`", ",", 
+   "2.2367770067541137`", ",", "2.6045557280267526`", ",", 
+   "2.1517682877786886`", ",", "2.8401567326026322`", ",", 
+   "2.04946921754284`", ",", "2.7046848625027806`", ",", 
+   "2.5916988770410363`", ",", "2.5617076709327424`", ",", 
+   "2.804161882294905`", ",", "2.2607940684689307`", ",", 
+   "2.5508237555398683`", ",", "2.1508716893244273`", ",", 
+   "2.5321728930886898`", ",", "2.184063341053922`", ",", 
+   "2.7916527718132578`", ",", "2.4136968886327788`", ",", 
+   "2.1073014092664906`", ",", "2.5549372638870387`", ",", 
+   "2.7128855725026444`", ",", "2.793603408447482`", ",", 
+   "2.428647744381255`", ",", "2.348165430832364`", ",", 
+   "2.3720433461730526`", ",", "2.8697059575176667`", ",", 
+   "2.531656221029219`", ",", "2.779883483881317`", ",", 
+   "2.8756206769683375`", ",", "2.0569539760960383`", ",", 
+   "2.699446146337932`", ",", "2.1518850110292735`", ",", 
+   "2.8963438671705464`", ",", "2.0613879455653317`", ",", 
+   "2.2576777101297574`", ",", "2.394736172663818`", ",", 
+   "2.718783078891434`", ",", "2.9564861334100785`", ",", 
+   "2.5626185429046613`", ",", "2.488723725223511`", ",", 
+   "2.6508524991656213`", ",", "2.456551056290916`", ",", 
+   "2.8927602288744017`", ",", "2.917586776820238`", ",", 
+   "2.268947625188484`", ",", "2.263321988457628`", ",", 
+   "2.1101595671452262`", ",", "2.0980458289885275`", ",", 
+   "2.842609632404565`", ",", "2.2263014524523386`", ",", 
+   "2.7940630262820694`", ",", "2.4531993235394416`", ",", 
+   "2.213603190507185`", ",", "2.879161540683185`", ",", 
+   "2.7737040863985998`", ",", "2.6127826328952946`", ",", 
+   "2.9695557199590423`", ",", "2.0434589250528274`", ",", 
+   "2.3060770919141724`", ",", "2.5423287389901246`", ",", 
+   "2.36290911896063`", ",", "2.337020857220014`", ",", "2.824488668805704`", 
+   ",", "2.234176598225596`", ",", "2.301648436758356`", ",", 
+   "2.567284399993985`", ",", "2.412107611564198`", ",", "2.434829597689993`",
+    ",", "2.959768146352864`", ",", "2.601233423139039`", ",", 
+   "2.084642315224138`", ",", "2.0644930075312318`", ",", 
+   "2.025803054926145`", ",", "2.300538905302225`", ",", 
+   "2.29856227887655`"}], "}"}]], "Output",
+ CellChangeTimes->{3.620012407682354*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "In Mathematica, one can use ",
+ StyleBox["RandomVariate", "Code"],
+ " and its cousins directly, or perhaps a ",
+ StyleBox["Table", "Code"],
+ " command. This generalizes to other more complex definitions inside the ",
+ StyleBox["Table", "Code"],
+ " function, and one can use the fact that many arithmetic operations are ",
+ StyleBox["Listable", "Code"],
+ " to avoid looping. (Yes, I know this could be written as ",
+ StyleBox["RandomReal[{2, 3}, 100]", "Code"],
+ ", but I wanted a simple example of vectorized arithmetic operations.)"
+}], "Text",
+ CellChangeTimes->{3.620012589682345*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"vec", " ", "=", " ", 
+    RowBox[{
+     RowBox[{"RandomReal", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0", ",", " ", "1"}], "}"}], ",", " ", "100"}], "]"}], "+", 
+     "2."}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"vec", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"RandomReal", "[", "]"}], ",", " ", 
+      RowBox[{"{", "100", "}"}]}], "]"}], "+", "2."}]}], ";"}]}], "Code",
+ CellChangeTimes->{3.62001264220157*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "3. If the i-th element of your list depends on the previous elements, you \
+can construct the list using ",
+ StyleBox["Nest", "Code"],
+ ", ",
+ StyleBox["Fold", "Code"],
+ ", ",
+ StyleBox["FixedPoint", "Code"],
+ " and their variants ",
+ StyleBox["NestList", "Code"],
+ ", ",
+ StyleBox["FoldList", "Code"],
+ " and ",
+ StyleBox["FixedPointList", "Code"]
+}], "Subsection",
+ CellChangeTimes->{{3.6200126675376053`*^9, 3.620012671317872*^9}, 
+   3.6200128224314833`*^9}],
+
+Cell[TextData[{
+ "Another common use of ",
+ StyleBox["For", "Code"],
+ " loops is when output ",
+ StyleBox["i", "Code"],
+ " depends on output ",
+ StyleBox["i-1", "Code"],
+ ". In Mathematica, this is a canonical use of ",
+ StyleBox["Nest", "Code"],
+ " and ",
+ StyleBox["Fold", "Code"],
+ ", and their ",
+ StyleBox["NestList", "Code"],
+ " and ",
+ StyleBox["FoldList", "Code"],
+ " counterparts that also return the intermediate results. For example, here \
+is the ",
+ StyleBox["For", "Code"],
+ " loop way to create autoregressive noise:"
+}], "Text",
+ CellChangeTimes->{3.6200128244504843`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"vec", " ", "=", " ", 
+   RowBox[{"Table", "[", 
+    RowBox[{"0", ",", " ", 
+     RowBox[{"{", "100", "}"}]}], "]"}]}], ";", " ", 
+  RowBox[{"For", "[", 
+   RowBox[{
+    RowBox[{"i", " ", "=", " ", "2"}], ",", " ", 
+    RowBox[{"i", " ", "<=", " ", "100"}], ",", " ", "\n", "  ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"vec", "[", 
+       RowBox[{"[", "i", "]"}], "]"}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"vec", "[", 
+        RowBox[{"[", 
+         RowBox[{"i", " ", "-", " ", "1"}], "]"}], "]"}], " ", "+", " ", 
+       RowBox[{"RandomReal", "[", "]"}]}]}], ";", " ", 
+     RowBox[{"i", "++"}]}]}], "]"}], ";"}]], "Code",
+ CellChangeTimes->{3.620013046453301*^9}],
+
+Cell[TextData[{
+ "Of course, you have to start at ",
+ StyleBox["i=2", "Code"],
+ " to avoid adding the zeroth part, which is the ",
+ StyleBox["Head", "Code"],
+ ", ",
+ StyleBox["List", "Code"],
+ ", to the vector."
+}], "Text",
+ CellChangeTimes->{3.6200130575326233`*^9, 3.620013088570842*^9}],
+
+Cell[TextData[{
+ "Here is the ",
+ StyleBox["FoldList", "Code"],
+ " way:"
+}], "Text",
+ CellChangeTimes->{3.620013091916396*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FoldList", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"#1", " ", "+", " ", "#2"}], " ", "&"}], ",", " ", "0", ",", " ", 
+   
+   RowBox[{"RandomReal", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", "1"}], "}"}], ",", " ", "99"}], "]"}]}], 
+  "]"}]], "Code",
+ CellChangeTimes->{{3.620013116807375*^9, 3.620013122311511*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0", ",", "0.38258532165993087`", ",", "1.2701700452044857`", ",", 
+   "1.6742512781543046`", ",", "1.969719858491318`", ",", 
+   "2.7981112019133567`", ",", "3.037333337659412`", ",", 
+   "3.4552690697159174`", ",", "3.76839787207388`", ",", 
+   "3.8235196002001297`", ",", "4.567966737507229`", ",", 
+   "4.590974661260519`", ",", "5.42418469481413`", ",", "5.820631090069648`", 
+   ",", "6.562418701113399`", ",", "7.462120189648071`", ",", 
+   "7.8695346764001375`", ",", "7.968663903137051`", ",", 
+   "8.241486526893512`", ",", "8.336259193992012`", ",", "8.919538770091407`",
+    ",", "9.520232890505264`", ",", "9.550035172946943`", ",", 
+   "10.262124733389037`", ",", "11.023246476384859`", ",", 
+   "11.037475249325688`", ",", "11.95176657036379`", ",", 
+   "12.512220567438511`", ",", "12.712938837085103`", ",", 
+   "13.000735798331862`", ",", "13.29029782192002`", ",", 
+   "13.776990469057155`", ",", "14.453858363409244`", ",", 
+   "15.282587801168509`", ",", "15.852200364262655`", ",", 
+   "16.311070963109216`", ",", "16.31346057329176`", ",", 
+   "16.78723606823181`", ",", "16.936563337069938`", ",", "17.8497091171269`",
+    ",", "18.533882527751167`", ",", "19.514711200506493`", ",", 
+   "19.52928380725843`", ",", "20.11240120190593`", ",", 
+   "20.614038536877196`", ",", "21.124880945654674`", ",", 
+   "21.232918940214386`", ",", "22.1557624606096`", ",", 
+   "22.799833702541807`", ",", "23.10262411561704`", ",", 
+   "24.05983955088354`", ",", "24.08283944998822`", ",", 
+   "25.035451552674445`", ",", "25.920935153620956`", ",", 
+   "26.492662357742258`", ",", "27.48322104949016`", ",", 
+   "27.926154700511944`", ",", "28.18988778507916`", ",", 
+   "28.94397372471666`", ",", "29.421246023182597`", ",", 
+   "30.073219435726863`", ",", "30.54127597394622`", ",", 
+   "31.335634927753276`", ",", "31.927425301064204`", ",", 
+   "32.1929373804774`", ",", "32.51747487979786`", ",", "33.37531169268452`", 
+   ",", "33.55566929769274`", ",", "33.568794064285626`", ",", 
+   "34.45590656743188`", ",", "35.08214268931795`", ",", "35.66534932566845`",
+    ",", "36.274121792864186`", ",", "37.08960442631895`", ",", 
+   "37.4977529335093`", ",", "38.48596911561765`", ",", "38.5967919683124`", 
+   ",", "39.37339919364164`", ",", "39.829420424791124`", ",", 
+   "40.49210854194006`", ",", "40.61491504234586`", ",", "40.70529257526427`",
+    ",", "40.848078525688685`", ",", "41.76169758334133`", ",", 
+   "42.51841390356229`", ",", "43.25709037163448`", ",", "44.2162232871295`", 
+   ",", "44.65743489355353`", ",", "45.462128593918486`", ",", 
+   "46.05764536008584`", ",", "46.06206600281629`", ",", 
+   "46.242839327055194`", ",", "46.443231418361954`", ",", 
+   "47.30394618101136`", ",", "47.525787251537565`", ",", 
+   "48.31967075412927`", ",", "49.26542363916103`", ",", 
+   "50.115271591453485`", ",", "50.34855585346637`", ",", 
+   "51.32047556905232`"}], "}"}]], "Output",
+ CellChangeTimes->{{3.620013118009313*^9, 3.6200131242486143`*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "4. You can combine lists in very general ways using ",
+ StyleBox["Inner", "Code"],
+ " and ",
+ StyleBox["Outer", "Code"],
+ "."
+}], "Subsection",
+ CellChangeTimes->{{3.6200131353154907`*^9, 3.620013145008801*^9}}],
+
+Cell[TextData[{
+ "People also often use nested ",
+ StyleBox["For", "Code"],
+ " loops when they want to build up matrices depending on elements of two \
+different vectors. Here is where the generalised structure of ",
+ StyleBox["Outer", "Code"],
+ " is useful:"
+}], "Text",
+ CellChangeTimes->{3.6200131700406446`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Outer", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"N", "@", 
+     RowBox[{"Kurtosis", "[", 
+      RowBox[{"#1", "[", "#2", "]"}], "]"}]}], " ", "&"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+    "StudentTDistribution", ",", " ", "ExponentialDistribution", ",", " ", 
+     "\n", "  ", "ChiSquareDistribution"}], "}"}], ",", " ", 
+   RowBox[{"Range", "[", 
+    RowBox[{"5", ",", " ", "15"}], "]"}]}], "]"}]], "Code",
+ CellChangeTimes->{{3.620013259037161*^9, 3.62001327328942*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "9.`", ",", "6.`", ",", "5.`", ",", "4.5`", ",", "4.2`", ",", "4.`", ",", 
+     "3.857142857142857`", ",", "3.75`", ",", "3.6666666666666665`", ",", 
+     "3.6`", ",", "3.5454545454545454`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "9.`", ",", "9.`", ",", "9.`", ",", "9.`", ",", "9.`", ",", "9.`", ",", 
+     "9.`", ",", "9.`", ",", "9.`", ",", "9.`", ",", "9.`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "5.4`", ",", "5.`", ",", "4.714285714285714`", ",", "4.5`", ",", 
+     "4.333333333333333`", ",", "4.2`", ",", "4.090909090909091`", ",", "4.`",
+      ",", "3.923076923076923`", ",", "3.857142857142857`", ",", "3.8`"}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.620013275835587*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Another way to avoid nested loops is with ",
+ StyleBox["Tuples", "Code"],
+ ", as discussed ",
+ ButtonBox["here",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://mathematica.stackexchange.com/questions/7915/assigning-a-\
+particular-value-to-array-elements/7919#7919"], None},
+  ButtonNote->
+   "http://mathematica.stackexchange.com/questions/7915/assigning-a-\
+particular-value-to-array-elements/7919#7919"],
+ ". This nested For loop:"
+}], "Text",
+ CellChangeTimes->{
+  3.620013293546143*^9, {3.620013538522607*^9, 3.620013538523583*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"l", " ", "=", " ", "0"}], ";"}], "\n", 
+ RowBox[{"For", "[", 
+  RowBox[{
+   RowBox[{"i", " ", "=", " ", "0"}], ",", " ", 
+   RowBox[{"i", " ", "<", " ", "10"}], ",", " ", 
+   RowBox[{"i", "++"}], ",", "\n", " ", 
+   RowBox[{"For", "[", 
+    RowBox[{
+     RowBox[{"j", " ", "=", " ", "0"}], ",", " ", 
+     RowBox[{"j", " ", "<", " ", "10"}], ",", " ", 
+     RowBox[{"j", "++"}], ",", "\n", "  ", 
+     RowBox[{"For", "[", 
+      RowBox[{
+       RowBox[{"k", " ", "=", " ", "0"}], ",", " ", 
+       RowBox[{"k", " ", "<", " ", "10"}], ",", " ", 
+       RowBox[{"k", "++"}], ",", "\n", "   ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Xarray", "[", "l", "]"}], " ", "=", " ", 
+         RowBox[{"A", "[", 
+          RowBox[{"i", ",", " ", "j", ",", " ", "k"}], "]"}]}], ";", "   ", 
+        "\n", "   ", 
+        RowBox[{"Print", "[", 
+         RowBox[{"Xarray", "[", "l", "]"}], "]"}], ";", "\n", "   ", 
+        RowBox[{"l", "++"}], ";"}]}], "\n", "   ", "]"}]}], "\n", "  ", 
+    "]"}]}], "\n", " ", "]"}], "\n", 
+ RowBox[{
+  RowBox[{"Xarray", "[", "5", "]"}], ";"}]}], "Code",
+ CellChangeTimes->{
+  3.6200133405397863`*^9, {3.620013372082341*^9, 3.6200133762004137`*^9}, {
+   3.620013418918475*^9, 3.620013420132093*^9}}],
+
+Cell["Can be rewritten faster as:", "Text",
+ CellChangeTimes->{3.620013556752305*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Xarray", " ", "=", " ", 
+   RowBox[{"A", " ", "@@@", " ", 
+    RowBox[{"Tuples", "[", 
+     RowBox[{
+      RowBox[{"Range", "[", 
+       RowBox[{"0", ",", " ", "9"}], "]"}], ",", " ", "3"}], "]"}]}]}], 
+  ";"}]], "Code",
+ CellChangeTimes->{3.620013567847535*^9}],
+
+Cell["\<\
+Remarks: the time required for genenrating the list mentioned above may not \
+differ a lot, the again, as we stated at the beginning of this session, \
+development time matters!\
+\>", "Text",
+ CellChangeTimes->{{3.620013572516868*^9, 3.620013649243497*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Mixed Session: Efficiency vs Elegance", "Section",
+ CellChangeTimes->{{3.621297969832144*^9, 3.6212980289050617`*^9}}],
+
+Cell["\<\
+Sometimes the efficiency of your codes mainly depend on the your idea how to \
+do the task. Following is a very good example.\
+\>", "Text",
+ CellChangeTimes->{{3.62129803285718*^9, 3.621298128667635*^9}}],
+
+Cell["\<\
+Given a undirected graph $G=(VE)$, generate matrix $M$, where columns are \
+indexed by $E(G)$ and rows are indexed by all odd subsets of $V(G)$. An extra \
+requriements remove all the zero rows in $M$.\
+\>", "Text",
+ CellChangeTimes->{{3.621298150849762*^9, 3.621298261399742*^9}}],
+
+Cell["My original code:", "Text",
+ CellChangeTimes->{{3.6212982706868677`*^9, 3.621298279688579*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"g", "=", 
+   RowBox[{"RandomGraph", "[", 
+    RowBox[{"{", 
+     RowBox[{"16", ",", "20"}], "}"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6213016000821333`*^9, 3.62130161903542*^9}, {
+  3.621331886731786*^9, 3.621331889442154*^9}, {3.621331940710984*^9, 
+  3.6213319412023277`*^9}, {3.621332005248703*^9, 3.6213320056925707`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Func1", "[", "g_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ES", ",", "M", ",", "m"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"M", "=", 
+       RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Do", "[", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"OddQ", "[", 
+            RowBox[{"Length", "[", "U", "]"}], "]"}], "&&", 
+           RowBox[{"!", 
+            RowBox[{"EmptyGraphQ", "[", 
+             RowBox[{"Subgraph", "[", 
+              RowBox[{"g", ",", "U"}], "]"}], "]"}]}]}], ",", 
+          RowBox[{
+           RowBox[{"ES", "=", 
+            RowBox[{"EdgeList", "[", 
+             RowBox[{"Subgraph", "[", 
+              RowBox[{"g", ",", "U"}], "]"}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"m", "=", 
+            RowBox[{"Map", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Boole", "[", 
+                RowBox[{"MemberQ", "[", 
+                 RowBox[{"ES", ",", "#"}], "]"}], "]"}], "&"}], ",", 
+              RowBox[{"EdgeList", "[", "g", "]"}]}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"AppendTo", "[", 
+            RowBox[{"M", ",", "m"}], "]"}]}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"U", ",", 
+          RowBox[{"Subsets", "[", 
+           RowBox[{"VertexList", "[", "g", "]"}], "]"}]}], "}"}]}], "]"}], 
+      ";", "\[IndentingNewLine]", "M"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6212982932995234`*^9, 3.621298400180087*^9}, {
+  3.621298627612523*^9, 3.6212986299860897`*^9}, {3.6212987489270973`*^9, 
+  3.6212987502949247`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"M1", "=", 
+    RowBox[{"Func1", "[", "g", "]"}]}], ";"}], "//", "Timing"}]], "Input",
+ CellChangeTimes->{{3.6212984229995527`*^9, 3.6212984323883247`*^9}, {
+   3.621299598187105*^9, 3.621299599204618*^9}, 3.621299739280439*^9, {
+   3.62129981205326*^9, 3.621299876965638*^9}, {3.621301066920782*^9, 
+   3.621301068368964*^9}, {3.6213011109100246`*^9, 3.621301116538376*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "16.33067899999999994520294421818107366562`7.233604155568204", ",", 
+   "Null"}], "}"}]], "Output",
+ CellChangeTimes->{3.6213010688196583`*^9, 3.621301120235818*^9, 
+  3.621301550566656*^9, 3.621301623646668*^9, 3.621331898990122*^9, 
+  3.621331952443012*^9, 3.6213320504628277`*^9}]
+}, Open  ]],
+
+Cell["\<\
+An much eleganter code with the same idea behind is as follows:\
+\>", "Text",
+ CellChangeTimes->{{3.621298458580689*^9, 3.621298510202281*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Func2", "[", "g_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Oddsubsets", ",", "M", ",", "b"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"Oddsubsets", "=", 
+       RowBox[{"Select", "[", 
+        RowBox[{
+         RowBox[{"Subsets", "[", 
+          RowBox[{
+           RowBox[{"VertexList", "[", "g", "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "\[Infinity]", ",", "2"}], "}"}]}], "]"}], ",", 
+         
+         RowBox[{
+          RowBox[{"!", 
+           RowBox[{"EmptyGraphQ", "[", 
+            RowBox[{"Subgraph", "[", 
+             RowBox[{"g", ",", "#"}], "]"}], "]"}]}], "&"}]}], "]"}]}], ";", 
+      RowBox[{"M", "=", 
+       RowBox[{"Outer", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Boole", "[", 
+           RowBox[{"MemberQ", "[", 
+            RowBox[{
+             RowBox[{"EdgeList", "[", 
+              RowBox[{"Subgraph", "[", 
+               RowBox[{"g", ",", "#1"}], "]"}], "]"}], ",", "#2"}], "]"}], 
+           "]"}], "&"}], ",", "\[IndentingNewLine]", "Oddsubsets", ",", 
+         RowBox[{"EdgeList", "@", "g"}], ",", "1"}], "]"}]}], ";", "M"}]}], 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.621298514451715*^9, 3.6212985283054647`*^9}, {
+  3.621298762662183*^9, 3.621298890911126*^9}, {3.621299603076947*^9, 
+  3.6212996100002537`*^9}, {3.621302069823666*^9, 3.6213020746299*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"M2", "=", 
+    RowBox[{"Func2", "[", "g", "]"}]}], ";"}], "//", "Timing"}]], "Input",
+ CellChangeTimes->{{3.621298897603303*^9, 3.62129891200168*^9}, {
+  3.621299613539278*^9, 3.621299614571803*^9}, {3.621299883081455*^9, 
+  3.62129988732965*^9}, {3.621299938416395*^9, 3.621299940639295*^9}, {
+  3.621301082802034*^9, 3.621301084273386*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "51.30960499999999768760972074232995510101`7.7307985845910085", ",", 
+   "Null"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.621301085200531*^9, 3.62130155505177*^9, 3.621301628118698*^9, {
+   3.621302160417663*^9, 3.6213021629852467`*^9}, 3.621331907927842*^9, 
+   3.6213319694176073`*^9, 3.621332212918561*^9}]
+}, Open  ]],
+
+Cell["\<\
+
+So maybe we need try program in another way so that we can speed up our \
+alogirhm.\
+\>", "Text",
+ CellChangeTimes->{{3.621298772111422*^9, 3.621298778371027*^9}, {
+   3.62129893528279*^9, 3.6212989905871077`*^9}, 3.6213926735808573`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Func3", "[", "g_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"Oddsubsets", ",", "Positionlist", ",", "M"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{"PATEDGEList", ":", " ", 
+      RowBox[{
+      "Positions", " ", "of", " ", "elements", " ", "of", " ", "each", " ", 
+       "nontrivial", " ", "odd", " ", "subset", " ", "in", " ", 
+       "EdgeList"}]}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Oddsubsets", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"Subsets", "[", 
+         RowBox[{
+          RowBox[{"VertexList", "[", "g", "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"3", ",", "Infinity", ",", "2"}], "}"}]}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"!", 
+          RowBox[{"EmptyGraphQ", "[", 
+           RowBox[{"Subgraph", "[", 
+            RowBox[{"g", ",", "#"}], "]"}], "]"}]}], "&"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Positionlist", "=", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Flatten", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Position", "[", 
+            RowBox[{
+             RowBox[{"EdgeList", "[", "g", "]"}], ",", "#"}], "]"}], "&"}], "/@", 
+          RowBox[{"EdgeList", "[", 
+           RowBox[{"Subgraph", "[", 
+            RowBox[{"g", ",", "#"}], "]"}], "]"}]}], "]"}], "&"}], "/@", " ", 
+       "Oddsubsets"}]}], ";", 
+     RowBox[{"M", "=", 
+      RowBox[{"Flatten", "@", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"n", ",", "#"}], "}"}], "\[Rule]", "1"}], "&"}], "/@", 
+          RowBox[{"Positionlist", "[", 
+           RowBox[{"[", "n", "]"}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"n", ",", "1", ",", 
+           RowBox[{"Length", "@", "Positionlist"}]}], "}"}]}], "]"}]}]}], ";",
+      
+     RowBox[{"SparseArray", "[", "M", "]"}]}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.621299014166051*^9, 3.621299029492084*^9}, {
+   3.621299110427257*^9, 3.621299180625094*^9}, {3.621299266554289*^9, 
+   3.621299272136271*^9}, {3.621299318899878*^9, 3.6212994694030333`*^9}, 
+   3.621299517433076*^9, {3.621299554020413*^9, 3.62129955745898*^9}, {
+   3.621301812028289*^9, 3.621301868716002*^9}, {3.621301980791977*^9, 
+   3.621302030486415*^9}, {3.621302078677742*^9, 3.621302094385124*^9}, {
+   3.621302233347988*^9, 3.621302243592844*^9}, {3.621302586857869*^9, 
+   3.62130259787208*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"M3", "=", 
+    RowBox[{"Func3", "[", "g", "]"}]}], ";"}], "//", "Timing"}]], "Input",
+ CellChangeTimes->{{3.621299564973851*^9, 3.621299580195333*^9}, {
+  3.621299623868931*^9, 3.6212996247974787`*^9}, {3.621299895200821*^9, 
+  3.621299901630291*^9}, {3.621301097827435*^9, 3.6213010992825737`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "7.33358099999999968332531352643854916096`6.885916006443589", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{
+  3.62130109981453*^9, 3.621301166254139*^9, 3.62130156020315*^9, 
+   3.621301632576874*^9, {3.6213021165422277`*^9, 3.62130212245784*^9}, 
+   3.6213021653855352`*^9, 3.621331922560522*^9, 3.621331979077664*^9, 
+   3.621332082468684*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"func4", "[", "g_", "]"}], ":=", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"el", "=", 
+       RowBox[{"EdgeList", "[", "g", "]"}]}], ",", 
+      RowBox[{"vl", "=", 
+       RowBox[{"VertexList", "[", "g", "]"}]}]}], "}"}], ",", 
+    RowBox[{
+     RowBox[{"sub", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"Subsets", "[", 
+         RowBox[{
+          RowBox[{"VertexList", "[", "g", "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"3", ",", "\[Infinity]", ",", "2"}], "}"}]}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"!", 
+          RowBox[{"EmptyGraphQ", "[", 
+           RowBox[{"Subgraph", "[", 
+            RowBox[{"g", ",", "#"}], "]"}], "]"}]}], "&"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"SparseArray", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"i_", ",", "j_"}], "}"}], "/;", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"Length", "@", 
+            RowBox[{"Intersection", "[", 
+             RowBox[{
+              RowBox[{"sub", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", 
+              RowBox[{"List", "@@", 
+               RowBox[{"el", "[", 
+                RowBox[{"[", "j", "]"}], "]"}]}]}], "]"}]}], "\[Equal]", 
+           "2"}], ")"}]}], "\[RuleDelayed]", "1"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Length", "@", "sub"}], ",", 
+         RowBox[{"Length", "@", "el"}]}], "}"}]}], "]"}]}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.6213009997199287`*^9, 3.621301006431428*^9}, {
+  3.621301149763006*^9, 3.621301150362118*^9}, {3.621301256348521*^9, 
+  3.621301279296713*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"M4", "=", 
+    RowBox[{"func4", "[", "g", "]"}]}], ";"}], "//", "Timing"}]], "Input",
+ CellChangeTimes->{{3.621301023218281*^9, 3.621301049144416*^9}, {
+  3.621301155413824*^9, 3.621301183571437*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "5.7745420000000002858087100321426987648`6.782117457729431", ",", "Null"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.621301030973518*^9, 3.621301049741126*^9}, {
+   3.621301156456966*^9, 3.621301184151743*^9}, {3.6213012681479397`*^9, 
+   3.621301282534498*^9}, 3.621301569995596*^9, 3.621301637127885*^9, 
+   3.6213021710886374`*^9, 3.621303775505961*^9, 3.621331932490416*^9, 
+   3.6213319923995123`*^9, 3.621332064454557*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"EdmondsMatrix", "[", "g", "]"}], ";"}], "//", "Timing"}]], "Input",\
+
+ CellChangeTimes->{{3.6213320868696012`*^9, 3.621332109436365*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "5.97343699999999966365749060059897601604`6.7968242009626225", ",", 
+   "Null"}], "}"}]], "Output",
+ CellChangeTimes->{{3.621332098405583*^9, 3.621332115961375*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"func4Modify", "[", "g_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"el", ",", "vl", ",", "sub"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"el", "=", 
+      RowBox[{"EdgeList", "[", "g", "]"}]}], ";", 
+     RowBox[{"vl", "=", 
+      RowBox[{"VertexList", "[", "g", "]"}]}], ";", 
+     RowBox[{"sub", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"Subsets", "[", 
+         RowBox[{"vl", ",", 
+          RowBox[{"{", 
+           RowBox[{"3", ",", "\[Infinity]", ",", "2"}], "}"}]}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"!", 
+          RowBox[{"EmptyGraphQ", "[", 
+           RowBox[{"Subgraph", "[", 
+            RowBox[{"g", ",", "#"}], "]"}], "]"}]}], "&"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"SparseArray", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"i_", ",", "j_"}], "}"}], "/;", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"Length", "@", 
+            RowBox[{"Intersection", "[", 
+             RowBox[{
+              RowBox[{"sub", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", 
+              RowBox[{"List", "@@", 
+               RowBox[{"el", "[", 
+                RowBox[{"[", "j", "]"}], "]"}]}]}], "]"}]}], "\[Equal]", 
+           "2"}], ")"}]}], "\[RuleDelayed]", "1"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Length", "@", "sub"}], ",", 
+         RowBox[{"Length", "@", "el"}]}], "}"}]}], "]"}]}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.621302818580925*^9, 3.621302863872076*^9}, {
+  3.621303810381577*^9, 3.621303824172225*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"func4Modify", "[", "g", "]"}], ";"}], "//", "Timing"}]], "Input",
+ CellChangeTimes->{{3.6213028686022263`*^9, 3.6213028780132303`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.08308400000000000507061059806801495142`4.94011731033996", ",", "Null"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.621302878532526*^9, 3.6213037719364862`*^9, {3.6213039108590403`*^9, 
+   3.6213039141426783`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"M1", "\[Equal]", "M2"}]], "Input",
+ CellChangeTimes->{{3.62130118640335*^9, 3.621301188355616*^9}}],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{3.621301188964581*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"M2", "\[Equal]", "M3"}]], "Input",
+ CellChangeTimes->{{3.621301190690411*^9, 3.621301194292082*^9}}],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{3.621301194757197*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"M3", "\[Equal]", "M4"}]], "Input",
+ CellChangeTimes->{{3.621301195986136*^9, 3.621301197635749*^9}}],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{3.621301198158538*^9, 3.62130128467585*^9}]
+}, Open  ]],
+
+Cell["\<\
+From examples above, we can see that
+what really matters is not how you program, it is how you think!\
+\>", "Subsubsection",
+ CellChangeTimes->{{3.6213042153243227`*^9, 3.621304274597023*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Now let us look at another example: the cycle vertex incidence matrix\
+\>", "Section",
+ CellChangeTimes->{{3.621309555094571*^9, 3.6213095733262568`*^9}}],
+
+Cell["Given graph below", "Text",
+ CellChangeTimes->{{3.621309633017338*^9, 3.621309641960372*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"g", "=", 
+   RowBox[{"RandomGraph", "[", 
+    RowBox[{"{", 
+     RowBox[{"18", ",", "36"}], "}"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.621309644480949*^9, 3.6213096750980997`*^9}}],
+
+Cell["The original Do loop:", "Text",
+ CellChangeTimes->{{3.6213096121279907`*^9, 3.621309619335342*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"M1", "=", 
+    RowBox[{"{", "}"}]}], ";", " ", "\[IndentingNewLine]", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"m", "=", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Boole", "[", 
+           RowBox[{"MemberQ", "[", 
+            RowBox[{
+             RowBox[{"Flatten", "[", 
+              RowBox[{"List", "@@@", "C"}], "]"}], ",", "#"}], "]"}], "]"}], 
+          "&"}], ",", 
+         RowBox[{"VertexList", "[", "g", "]"}]}], "]"}]}], ";", 
+      RowBox[{"AppendTo", "[", 
+       RowBox[{"M1", ",", "m"}], "]"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"C", ",", 
+       RowBox[{"FindCycle", "[", 
+        RowBox[{"g", ",", 
+         RowBox[{"VertexCount", "[", "g", "]"}], ",", "All"}], "]"}]}], 
+      "}"}]}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.621309690604183*^9, 3.621309740834338*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1.58439700000000005530864655156619846821`6.220463924691329", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{{3.621309720524632*^9, 3.621309744565466*^9}, 
+   3.621309829134755*^9}]
+}, Open  ]],
+
+Cell["The Table function:", "Text",
+ CellChangeTimes->{{3.621309754430583*^9, 3.621309762544064*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"M2", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Boole", "[", 
+       RowBox[{"MemberQ", "[", 
+        RowBox[{
+         RowBox[{"Flatten", "[", 
+          RowBox[{"List", "@@@", "i"}], "]"}], ",", "j"}], "]"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", 
+        RowBox[{"FindCycle", "[", 
+         RowBox[{"g", ",", 
+          RowBox[{"VertexCount", "[", "g", "]"}], ",", "All"}], "]"}]}], 
+       "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j", ",", 
+        RowBox[{"VertexList", "[", "g", "]"}]}], "}"}]}], "]"}]}], ";"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.621309792867901*^9, 3.621309822195321*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.87246199999999995977617572862072847784`5.961346433667627", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{{3.621309812736464*^9, 3.6213098239728813`*^9}}]
+}, Open  ]],
+
+Cell["The Outer function:", "Text",
+ CellChangeTimes->{{3.6213098523324747`*^9, 3.621309858107417*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"M3", "=", 
+    RowBox[{"Outer", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Boole", "[", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{
+          RowBox[{"Flatten", "[", 
+           RowBox[{"List", "@@@", "#1"}], "]"}], ",", "#2"}], "]"}], "]"}], 
+       "&"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"FindCycle", "[", 
+       RowBox[{"g", ",", 
+        RowBox[{"VertexCount", "[", "g", "]"}], ",", "All"}], "]"}], ",", 
+      RowBox[{"VertexList", "[", "g", "]"}], ",", "1"}], "]"}]}], ";"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6213098377116127`*^9, 3.621309845199253*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.97530899999999998151167801552219316363`6.009742145115943", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.621309864918726*^9}]
+}, Open  ]],
+
+Cell["Now let us see the SparseArray function:", "Text",
+ CellChangeTimes->{{3.621309874628188*^9, 3.621309892420389*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"vl", "=", 
+    RowBox[{"VertexList", "[", "g", "]"}]}], ";", "\[IndentingNewLine]", 
+   RowBox[{"cl", "=", 
+    RowBox[{"FindCycle", "[", 
+     RowBox[{"g", ",", 
+      RowBox[{"VertexCount", "[", "g", "]"}], ",", "All"}], "]"}]}], ";", 
+   "\[IndentingNewLine]", 
+   RowBox[{"M4", "=", 
+    RowBox[{"SparseArray", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"i_", ",", "j_"}], "}"}], "/;", 
+        RowBox[{"(", 
+         RowBox[{"MemberQ", "[", 
+          RowBox[{
+           RowBox[{"Flatten", "[", 
+            RowBox[{"List", "@@@", 
+             RowBox[{"cl", "[", 
+              RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ",", "j"}], "]"}], 
+         ")"}]}], "\[RuleDelayed]", "1"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Length", "@", "cl"}], ",", 
+        RowBox[{"Length", "@", "vl"}]}], "}"}]}], "]"}]}], ";"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6213099001683483`*^9, 3.621309901085104*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1.35548399999999991116794717527227476239`6.152694308856976", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.621309909780529*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"M1", "\[Equal]", "M2", "\[Equal]", "M3", "\[Equal]", 
+  "M4"}]], "Input",
+ CellChangeTimes->{{3.621309935023011*^9, 3.62130994045634*^9}}],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{3.621309941261499*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"g", "=", 
+   RowBox[{"RandomGraph", "[", 
+    RowBox[{"{", 
+     RowBox[{"16", ",", "30"}], "}"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.621326916543758*^9, 3.621326920211906*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Timing", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"M1", "=", 
+    RowBox[{"{", "}"}]}], ";", " ", "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"m", "=", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Boole", "[", 
+           RowBox[{"MemberQ", "[", 
+            RowBox[{
+             RowBox[{"Map", "[", 
+              RowBox[{"Sort", ",", "C"}], "]"}], ",", "#"}], "]"}], "]"}], 
+          "&"}], ",", 
+         RowBox[{"EdgeList", "[", "g", "]"}]}], "]"}]}], ";", 
+      RowBox[{"AppendTo", "[", 
+       RowBox[{"M1", ",", "m"}], "]"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"C", ",", 
+       RowBox[{"FindCycle", "[", 
+        RowBox[{"g", ",", 
+         RowBox[{"VertexCount", "@", "g"}], ",", "All"}], "]"}]}], "}"}]}], 
+    "]"}], ";"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"\t\t"}]}], "Input",
+ CellChangeTimes->{{3.621326845219475*^9, 3.6213269526664543`*^9}, {
+  3.621327016688815*^9, 3.621327030495232*^9}, {3.62132722523357*^9, 
+  3.6213272274636793`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.60045999999999999374722392531111836433`5.799083995196935", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{{3.6213268877454453`*^9, 3.621326955428491*^9}, {
+   3.6213270242347307`*^9, 3.6213270319579153`*^9}, 3.621327347327972*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"M2", "=", 
+    RowBox[{"Outer", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Boole", "[", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{
+          RowBox[{"Sort", "/@", "#1"}], ",", "#2"}], "]"}], "]"}], "&"}], ",", 
+      RowBox[{"FindCycle", "[", 
+       RowBox[{"g", ",", 
+        RowBox[{"VertexCount", "@", "g"}], ",", "All"}], "]"}], ",", 
+      RowBox[{"EdgeList", "@", "g"}], ",", "1"}], "]"}]}], ";"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{
+  3.621326873564815*^9, {3.621326959037068*^9, 3.6213269614821577`*^9}, {
+   3.621327034030525*^9, 3.621327040461359*^9}, {3.6213270878039913`*^9, 
+   3.621327145865679*^9}, {3.621327177890284*^9, 3.621327197451187*^9}, {
+   3.6213272302594*^9, 3.621327313063501*^9}, {3.621327364672752*^9, 
+   3.621327370422249*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.49807800000000002071942617476452142`5.717897272740158", ",", "Null"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.621326874101158*^9, {3.621327287325233*^9, 3.621327315768566*^9}, {
+   3.6213273502261047`*^9, 3.621327376380488*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"M1", "\[Equal]", "M2"}]], "Input",
+ CellChangeTimes->{{3.621327323666033*^9, 3.6213273261006327`*^9}}],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{3.6213273265969687`*^9, 3.62132737967649*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"M", "=", 
+    RowBox[{"{", "}"}]}], ";", " ", "\[IndentingNewLine]", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"m", "=", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Boole", "[", 
+           RowBox[{"MemberQ", "[", 
+            RowBox[{"C", ",", "#"}], "]"}], "]"}], "&"}], ",", 
+         RowBox[{"EdgeList", "[", "d", "]"}]}], "]"}]}], ";", 
+      RowBox[{"AppendTo", "[", 
+       RowBox[{"M", ",", "m"}], "]"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"C", ",", 
+       RowBox[{"FindCycle", "[", 
+        RowBox[{"d", ",", 
+         RowBox[{"VertexCount", "[", "d", "]"}], ",", "All"}], "]"}]}], 
+      "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+   RowBox[{"M3", "=", "M"}], ";"}], "]"}]], "Input",
+ CellChangeTimes->{{3.621328076150943*^9, 3.621328108661088*^9}, {
+  3.6213284565716352`*^9, 3.621328465395831*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.0031039999999999999882871470902045985`3.5125216258657748", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{
+  3.621328110638225*^9, 3.6213284667985697`*^9, {3.621328507025503*^9, 
+   3.621328523214942*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"M4", "=", 
+    RowBox[{"Outer", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Boole", "[", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"#1", ",", "#2"}], "]"}], "]"}], "&"}], ",", 
+      RowBox[{"FindCycle", "[", 
+       RowBox[{"d", ",", 
+        RowBox[{"VertexCount", "@", "d"}], ",", "All"}], "]"}], ",", 
+      RowBox[{"EdgeList", "@", "d"}], ",", "1"}], "]"}]}], ";"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.621328148007413*^9, 3.62132819578961*^9}, {
+  3.621328475578392*^9, 3.621328481912486*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.00170999999999999993151311716843565591`3.2535960236717782", ",", 
+   "Null"}], "}"}]], "Output",
+ CellChangeTimes->{{3.6213285187388372`*^9, 3.621328526657557*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.00333400000000000015787371410169726005`3.5435655087716107", ",", 
+   "Null"}], "}"}]], "Input",
+ CellChangeTimes->{3.621328508993642*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.00333400000000000015787371410169726005`3.5435655087716107", ",", 
+   "Null"}], "}"}]], "Output",
+ CellChangeTimes->{3.6213285090439253`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"M3", "\[Equal]", "M4"}]], "Input",
+ CellChangeTimes->{{3.621328219853181*^9, 3.621328221453993*^9}}],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{3.6213282222166443`*^9, 3.621328490361519*^9, 
+  3.621328536457781*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{897, 615},
+WindowMargins->{{2, Automatic}, {Automatic, 21}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 235, 4, 148, "Title"],
+Cell[818, 28, 604, 14, 30, "Text"],
+Cell[1425, 44, 952, 20, 87, "Text"],
+Cell[2380, 66, 640, 20, 68, "Text"],
+Cell[3023, 88, 132, 3, 30, "Text"],
+Cell[3158, 93, 189, 6, 30, "Text"],
+Cell[3350, 101, 507, 13, 49, "Code"],
+Cell[3860, 116, 190, 5, 30, "Text"],
+Cell[4053, 123, 371, 10, 50, "Code"],
+Cell[4427, 135, 185, 5, 30, "Text"],
+Cell[4615, 142, 572, 16, 66, "Code"],
+Cell[5190, 160, 178, 5, 30, "Text"],
+Cell[5371, 167, 300, 9, 49, "Code"],
+Cell[5674, 178, 188, 5, 30, "Text"],
+Cell[CellGroupData[{
+Cell[5887, 187, 989, 30, 111, "Code"],
+Cell[6879, 219, 176, 4, 28, "Output"]
+}, Open  ]],
+Cell[7070, 226, 292, 5, 49, "Text"],
+Cell[CellGroupData[{
+Cell[7387, 235, 114, 1, 30, "ItemNumbered"],
+Cell[7504, 238, 107, 1, 30, "ItemNumbered"],
+Cell[7614, 241, 236, 4, 49, "ItemNumbered"],
+Cell[7853, 247, 255, 5, 49, "ItemNumbered"],
+Cell[8111, 254, 163, 3, 30, "ItemNumbered"]
+}, Open  ]],
+Cell[8289, 260, 241, 5, 49, "Text"],
+Cell[CellGroupData[{
+Cell[8555, 269, 169, 2, 64, "Section"],
+Cell[CellGroupData[{
+Cell[8749, 275, 96, 1, 44, "Subsection"],
+Cell[8848, 278, 269, 5, 49, "Text"],
+Cell[9120, 285, 197, 9, 30, "Text"],
+Cell[9320, 296, 604, 18, 68, "Text"],
+Cell[9927, 316, 436, 12, 30, "Text"],
+Cell[CellGroupData[{
+Cell[10388, 332, 365, 11, 50, "Code"],
+Cell[10756, 345, 181, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10974, 355, 375, 11, 50, "Code"],
+Cell[11352, 368, 230, 6, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11619, 379, 486, 12, 50, "Code"],
+Cell[12108, 393, 322, 7, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12467, 405, 494, 11, 50, "Code"],
+Cell[12964, 418, 353, 8, 28, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13366, 432, 95, 1, 44, "Subsection"],
+Cell[13464, 435, 262, 6, 30, "Text"],
+Cell[13729, 443, 216, 6, 49, "Code"],
+Cell[13948, 451, 305, 9, 30, "Text"],
+Cell[14256, 462, 135, 2, 49, "Code"],
+Cell[14394, 466, 213, 5, 30, "Text"],
+Cell[14610, 473, 259, 8, 30, "Text"],
+Cell[CellGroupData[{
+Cell[14894, 485, 433, 13, 50, "Code"],
+Cell[15330, 500, 203, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15570, 510, 262, 7, 28, "Input"],
+Cell[15835, 519, 204, 5, 28, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16088, 530, 97, 1, 44, "Subsection"],
+Cell[16188, 533, 654, 16, 49, "Text"],
+Cell[CellGroupData[{
+Cell[16867, 553, 1030, 29, 97, "Code"],
+Cell[17900, 584, 1025, 17, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18962, 606, 1045, 25, 82, "Code"],
+Cell[20010, 633, 616, 12, 35, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20663, 650, 1049, 20, 50, "Code"],
+Cell[21715, 672, 663, 13, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22415, 690, 818, 23, 97, "Code"],
+Cell[23236, 715, 302, 7, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23575, 727, 964, 21, 82, "Code"],
+Cell[24542, 750, 207, 5, 35, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24786, 760, 657, 20, 98, "Code"],
+Cell[25446, 782, 547, 10, 35, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26030, 797, 465, 12, 50, "Code"],
+Cell[26498, 811, 419, 9, 28, "Output"]
+}, Open  ]],
+Cell[26932, 823, 334, 7, 30, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27303, 835, 97, 1, 44, "Subsection"],
+Cell[27403, 838, 856, 20, 49, "Text"],
+Cell[28262, 860, 275, 9, 49, "Code"],
+Cell[28540, 871, 200, 5, 30, "Text"],
+Cell[28743, 878, 213, 6, 50, "Code"],
+Cell[CellGroupData[{
+Cell[28981, 888, 437, 12, 50, "Code"],
+Cell[29421, 902, 230, 6, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29688, 913, 388, 12, 50, "Code"],
+Cell[30079, 927, 204, 5, 28, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30332, 938, 95, 1, 44, "Subsection"],
+Cell[30430, 941, 670, 20, 49, "Text"],
+Cell[31103, 963, 101, 2, 49, "Code"],
+Cell[31207, 967, 365, 11, 49, "Text"],
+Cell[31575, 980, 426, 12, 50, "Code"],
+Cell[CellGroupData[{
+Cell[32026, 996, 1086, 26, 114, "Code"],
+Cell[33115, 1024, 8113, 210, 90, "Output"]
+}, Open  ]],
+Cell[41243, 1237, 238, 7, 30, "Text"],
+Cell[CellGroupData[{
+Cell[41506, 1248, 745, 22, 114, "Code"],
+Cell[42254, 1272, 1749, 26, 148, "Output"]
+}, Open  ]],
+Cell[44018, 1301, 380, 10, 49, "Text"],
+Cell[CellGroupData[{
+Cell[44423, 1315, 1000, 26, 130, "Code"],
+Cell[45426, 1343, 1896, 29, 148, "Output"]
+}, Open  ]],
+Cell[47337, 1375, 188, 5, 30, "Text"],
+Cell[CellGroupData[{
+Cell[47550, 1384, 1117, 31, 130, "Code"],
+Cell[48670, 1417, 1845, 29, 148, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[50576, 1453, 313, 4, 64, "Section"],
+Cell[50892, 1459, 332, 6, 68, "Text"],
+Cell[51227, 1467, 142, 4, 49, "Text"],
+Cell[CellGroupData[{
+Cell[51394, 1475, 319, 6, 59, "Subsubsection"],
+Cell[51716, 1483, 229, 5, 49, "Text"],
+Cell[CellGroupData[{
+Cell[51970, 1492, 525, 13, 98, "Code"],
+Cell[52498, 1507, 221, 6, 28, "Output"]
+}, Open  ]],
+Cell[52734, 1516, 474, 15, 49, "Text"],
+Cell[53211, 1533, 546, 16, 66, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[53794, 1554, 224, 4, 59, "Subsubsection"],
+Cell[54021, 1560, 227, 4, 49, "Text"],
+Cell[CellGroupData[{
+Cell[54273, 1568, 599, 17, 49, "Code"],
+Cell[54875, 1587, 3043, 52, 182, "Output"]
+}, Open  ]],
+Cell[57933, 1642, 605, 13, 87, "Text"],
+Cell[58541, 1657, 527, 17, 80, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[59105, 1679, 480, 16, 69, "Subsection"],
+Cell[59588, 1697, 588, 20, 68, "Text"],
+Cell[60179, 1719, 713, 20, 65, "Code"],
+Cell[60895, 1741, 289, 9, 30, "Text"],
+Cell[61187, 1752, 126, 5, 30, "Text"],
+Cell[CellGroupData[{
+Cell[61338, 1761, 364, 11, 49, "Code"],
+Cell[61705, 1774, 3022, 49, 182, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[64776, 1829, 229, 7, 44, "Subsection"],
+Cell[65008, 1838, 315, 8, 49, "Text"],
+Cell[CellGroupData[{
+Cell[65348, 1850, 503, 13, 66, "Code"],
+Cell[65854, 1865, 789, 18, 63, "Output"]
+}, Open  ]],
+Cell[66658, 1886, 565, 15, 30, "Text"],
+Cell[67226, 1903, 1268, 32, 206, "Code"],
+Cell[68497, 1937, 85, 1, 30, "Text"],
+Cell[68585, 1940, 297, 9, 50, "Code"],
+Cell[68885, 1951, 267, 5, 49, "Text"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[69201, 1962, 124, 1, 64, "Section"],
+Cell[69328, 1965, 214, 4, 30, "Text"],
+Cell[69545, 1971, 291, 5, 49, "Text"],
+Cell[69839, 1978, 101, 1, 30, "Text"],
+Cell[69943, 1981, 374, 8, 28, "Input"],
+Cell[70320, 1991, 1765, 46, 114, "Input"],
+Cell[CellGroupData[{
+Cell[72110, 2041, 421, 8, 28, "Input"],
+Cell[72534, 2051, 325, 7, 28, "Output"]
+}, Open  ]],
+Cell[72874, 2061, 153, 3, 30, "Text"],
+Cell[73030, 2066, 1445, 38, 97, "Input"],
+Cell[CellGroupData[{
+Cell[74500, 2108, 389, 8, 28, "Input"],
+Cell[74892, 2118, 354, 8, 28, "Output"]
+}, Open  ]],
+Cell[75261, 2129, 249, 6, 49, "Text"],
+Cell[75513, 2137, 2572, 65, 114, "Input"],
+Cell[CellGroupData[{
+Cell[78110, 2206, 346, 7, 28, "Input"],
+Cell[78459, 2215, 397, 9, 28, "Output"]
+}, Open  ]],
+Cell[78871, 2227, 1742, 50, 80, "Input"],
+Cell[CellGroupData[{
+Cell[80638, 2281, 247, 6, 28, "Input"],
+Cell[80888, 2289, 472, 9, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[81397, 2303, 184, 5, 28, "Input"],
+Cell[81584, 2310, 207, 5, 28, "Output"]
+}, Open  ]],
+Cell[81806, 2318, 1708, 48, 114, "Input"],
+Cell[CellGroupData[{
+Cell[83539, 2370, 182, 4, 28, "Input"],
+Cell[83724, 2376, 261, 7, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84022, 2388, 123, 2, 28, "Input"],
+Cell[84148, 2392, 73, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84258, 2398, 124, 2, 28, "Input"],
+Cell[84385, 2402, 73, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84495, 2408, 124, 2, 28, "Input"],
+Cell[84622, 2412, 94, 1, 28, "Output"]
+}, Open  ]],
+Cell[84731, 2416, 202, 4, 59, "Subsubsection"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84970, 2425, 164, 3, 64, "Section"],
+Cell[85137, 2430, 99, 1, 30, "Text"],
+Cell[85239, 2433, 227, 6, 28, "Input"],
+Cell[85469, 2441, 105, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[85599, 2446, 929, 27, 63, "Input"],
+Cell[86531, 2475, 231, 6, 28, "Output"]
+}, Open  ]],
+Cell[86777, 2484, 101, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[86903, 2489, 743, 22, 46, "Input"],
+Cell[87649, 2513, 207, 5, 28, "Output"]
+}, Open  ]],
+Cell[87871, 2521, 103, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[87999, 2526, 659, 18, 46, "Input"],
+Cell[88661, 2546, 181, 5, 28, "Output"]
+}, Open  ]],
+Cell[88857, 2554, 122, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[89004, 2559, 1061, 30, 80, "Input"],
+Cell[90068, 2591, 181, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[90286, 2601, 162, 3, 28, "Input"],
+Cell[90451, 2606, 73, 1, 28, "Output"]
+}, Open  ]],
+Cell[90539, 2610, 225, 6, 28, "Input"],
+Cell[CellGroupData[{
+Cell[90789, 2620, 1071, 30, 97, "Input"],
+Cell[91863, 2652, 283, 6, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[92183, 2663, 843, 21, 46, "Input"],
+Cell[93029, 2686, 279, 7, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[93345, 2698, 126, 2, 28, "Input"],
+Cell[93474, 2702, 96, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[93607, 2708, 943, 26, 80, "Input"],
+Cell[94553, 2736, 258, 7, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[94848, 2748, 583, 16, 28, "Input"],
+Cell[95434, 2766, 209, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[95680, 2776, 182, 5, 28, "Input"],
+Cell[95865, 2783, 185, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[96087, 2793, 124, 2, 28, "Input"],
+Cell[96214, 2797, 122, 2, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
